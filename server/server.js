@@ -11,4 +11,9 @@ io.sockets.on('connection', function (socket) {
     socket.on('tank', function(data) {
         socket.broadcast.event('tank', data);
     });
+
+    // Listen for controller
+    socket.on('control', function(data) {
+        console.log(data);
+    });
 });
