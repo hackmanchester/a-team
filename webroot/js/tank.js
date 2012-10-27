@@ -1,8 +1,12 @@
-var tank = _.extend(gameobject, {
+var tank = Object.create(gameobject);
+
+tank.draw = function(delta) {
     
-    draw: function(delta) {
-        gamemanager.context.fillStyle="#FF0000";
-        gamemanager.context.fillRect(this.x,this.y,10,10);
-    }
+    this.updatePosition(delta);
     
-});
+    this.drawer.draw(this);
+};
+
+tank.updatePosition = function(delta) {
+
+};

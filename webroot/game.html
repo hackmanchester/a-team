@@ -10,18 +10,27 @@
         <script src="/js/gamemanager.js"></script>
         <script src="/js/gameobject.js"></script>
         <script src="/js/tank.js"></script>
+        <script src="/js/tankCanvas.js"></script>
         
     </head>
     <body>
-        <canvas id="gamearea"></canvas>
+        <canvas id="gamearea" width="500" height="500"></canvas>
         <script>
             $(document).ready(function() {
                 
                 var canvas = document.getElementById('gamearea');
                 var context = canvas.getContext('2d');
+                tank.drawer = tankCanvas;
                 gamemanager.init(canvas, context);
-                var tankObj = _.extend(tank, {x: 10, y:50});
+                var tankObj = Object.create(tank);
+                tankObj.x = 30;
+                tankObj.y = 50;
+                
                 gamemanager.addObject(tankObj);
+                var tankObj2 = Object.create(tank);
+                tankObj2.x = 40;
+                tankObj2.y = 100;
+                gamemanager.addObject(tankObj2);
                 gameloop();
             })
         </script>

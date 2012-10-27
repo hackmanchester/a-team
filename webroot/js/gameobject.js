@@ -5,6 +5,13 @@ var gameobject = {
     x: 0,
     y: 0,
     
+    vector: {
+        x: 0, 
+        y: 0
+    },
+    
+    drawer: null,
+    
     init: function() {
         _.bindAll(this);
     },
