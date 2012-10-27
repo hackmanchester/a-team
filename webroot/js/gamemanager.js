@@ -3,7 +3,7 @@
  */
 var GameManager = {
     
-    objects : [],
+    objects : {},
     canvas: null, 
     context: null,
     init : function(canvas, context) {
@@ -26,12 +26,15 @@ var GameManager = {
     },
     
     addObject: function(gameObject) {
-        gameObject.init();
-        this.objects.push(gameObject);
+        this.objects[gameObject.id] = gameObject;
     }, 
     
     bindEvents: function() {
 
+    },
+
+    moveTank: function(tank) {
+        this.objects[tank.id].vector = tank.vector;
     }
     
 }

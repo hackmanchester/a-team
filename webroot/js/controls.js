@@ -1,6 +1,6 @@
 // Client
 $(function(){
-    var controller_id = 'blah';
+    var controller_id = Math.random()+'';
     var socket = io.connect(
         'http://'+window.location.hostname+':9000/'
     );
@@ -33,7 +33,7 @@ $(function(){
     });
 
     socket.emit('join-control', {
-        controller_id: controller_id
         // send team? display?
+        controller_id: controller_id
     });
 });
