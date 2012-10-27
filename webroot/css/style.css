@@ -103,10 +103,13 @@ input[type=text], input[type=password] {
 
 
 #content {
-    width: 500px;
+    width: 480px;
+    height: 320px;
     margin: auto;
     border: 1px solid #000;
     padding: 20px;
+    background-image: url(/imgs/controller.png);
+    background-repeat: no-repeat;
 }
 
 #move_controls, #shoot_controls {
