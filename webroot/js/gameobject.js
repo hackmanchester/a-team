@@ -1,9 +1,16 @@
 /**
  * Game manager, stores entities, handles events, draws game
  */
-var gameobject = {
+var GameObject = {
     x: 0,
     y: 0,
+    speed: 0,
+    vector: {
+        x: 0, 
+        y: 0
+    },
+    
+    drawer: null,
     
     init: function() {
         _.bindAll(this);
@@ -11,6 +18,11 @@ var gameobject = {
     
     draw : function(delta) {
         
+    },
+    
+    updatePosition: function(delta) {
+        this.x += this.vector.x * delta * this.speed * 0.02;
+        this.y += this.vector.y * delta * this.speed * 0.02;
     }
     
 }

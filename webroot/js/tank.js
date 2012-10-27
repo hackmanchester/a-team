@@ -1,8 +1,12 @@
-var tank = _.extend(gameobject, {
+var Tank = Object.create(GameObject);
+
+Tank.speed = 10;
+
+Tank.draw = function(delta) {
     
-    draw: function(delta) {
-        gamemanager.context.fillStyle="#FF0000";
-        gamemanager.context.fillRect(this.x,this.y,10,10);
-    }
+    this.updatePosition(delta);
     
-});
+    this.drawer.draw(this);
+};
+
+
