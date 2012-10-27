@@ -5,14 +5,23 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="/css/game.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script src="/js/underscore.js"></script>
         <script src="/js/gameloop.js"></script>
         <script src="/js/gamemanager.js"></script>
+        <script src="/js/gameobject.js"></script>
+        <script src="/js/tank.js"></script>
         
     </head>
     <body>
-        
+        <canvas id="gamearea"></canvas>
         <script>
             $(document).ready(function() {
+                
+                var canvas = document.getElementById('gamearea');
+                var context = canvas.getContext('2d');
+                gamemanager.init(canvas, context);
+                var tankObj = _.extend(tank, {x: 10, y:50});
+                gamemanager.addObject(tankObj);
                 gameloop();
             })
         </script>
