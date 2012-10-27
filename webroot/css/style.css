@@ -106,10 +106,49 @@ input[type=text], input[type=password] {
     width: 480px;
     height: 320px;
     margin: auto;
-    border: 1px solid #000;
-    padding: 20px;
+}
+#controller {
+    width: 480px;
+    height: 208px;
     background-image: url(/imgs/controller.png);
     background-repeat: no-repeat;
+}
+#move_up, #move_down, #move_left, #move_right, #shoot_bullet, #shoot_mine {
+    position: relative;
+    border: 1px solid yellow;
+    width: 30px;
+    height: 30px;
+}
+#move_up {
+    top: 80px;
+    left: 70px;
+    
+}
+#move_down {
+    top: 48px;
+    left: 70px;
+}
+#move_left {
+    top: 80px;
+    left: 37px;
+}
+#move_right {
+    top: 47px;
+    left: 100px;
+}
+#shoot_bullet {
+    width: 50px; height: 50px;
+    top: -65px;
+    left: 375px;
+}
+#shoot_mine {
+    width: 50px; height: 50px;
+    top: -10px;
+    left: 310px;
+}
+#status {
+    margin: auto;
+    text-align: center;
 }
 
 #move_controls, #shoot_controls {

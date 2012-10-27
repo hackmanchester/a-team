@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="css/style.css">
   <!-- Phone specific stuff -->
 
-	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
  
@@ -16,29 +15,20 @@
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <script type="text/javascript" src="js/jquery.min.js"></script>
-  <script src='http://localhost:9000/socket.io/socket.io.js'></script>  
+  <script src='js/socket.io.js'></script>  
   <script src='js/controls.js'></script>
 </head>
 <body>
 	<div id="content">
-	   <div id="status">
-            
-	   </div>
-	  Move:
-	  <div id="move_controls" data-type="move">
-			<input type="button" data-direction="up" id="move_up" value="Up" /><br/>
-			<input type="button" data-direction="down" id="move_down" value="Down" />
-			<input type="button" data-direction="left" id="move_left" value="Left" /><br/>
-			<input type="button" data-direction="right" id="move_right" value="Right" />
-	  </div>
-
-	  Shoot:
-	  <div id="shoot_controls" data-type="shoot">
-			<input type="button" data-direction="up" id="shoot_up" value="Up" /><br/>
-			<input type="button" data-direction="down" id="shoot_down" value="Down" />
-			<input type="button" data-direction="left" id="shoot_left" value="Left" /><br/>
-			<input type="button" data-direction="right" id="shoot_right" value="Right" />
-	  </div>
+		<div id="status"></div>
+		<div id="controller">
+			<div data-type="move" data-action="up" id="move_up"></div>
+			<div data-type="move" data-action="left" id="move_left"></div>
+			<div data-type="move" data-action="right" id="move_right"></div>
+			<div data-type="move" data-action="down" id="move_down"></div>
+			<div data-type="shoot" data-action="mine" id="shoot_mine"></div>
+			<div data-type="shoot" data-action="bullet" id="shoot_bullet"></div>
+		</div>
 	</div>
 </body>
 </html>

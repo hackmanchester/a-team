@@ -77,7 +77,7 @@ io.sockets.on('connection', function (socket) {
         });
 
         console.log(
-            owner +"'s tank "+data.state+" "+data.type+" "+data.direction
+            owner +"'s tank "+data.state+" "+data.type+" "+ data.action
         );
     }
 
