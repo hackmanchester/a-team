@@ -25,11 +25,13 @@ var _vectorConvert = function(direction) {
 }
 
 var controllers = {};
-var objects = [];
+var ownerTanks = {};
+var objects = {};
 io.sockets.on('connection', function (socket) {
     // Send everyone's position to bootstrap client
     socket.on('load', function() {
         console.log('Client connected, send map to them');
+        socket.emit('load', {objects: objects});
     });
 
     socket.on('join-control', function(data){
@@ -38,11 +40,13 @@ io.sockets.on('connection', function (socket) {
 
         // Spawn tank on battlefield
         var tank = Object.create(Tank);
+        tank.getId();
         tank.owner = data.controller_id;
-        tank.x = 0;
-        tank.y = 0;
+        ownerTanks[data.controller_id] = tank.id;
+        tank.x = 10;
+        tank.y = 10;
 
-        objects.push(tank);
+        objects[tank.id] = tank;
 
         // Send update event to everyone
         socket.broadcast.emit('createTank', {
@@ -56,15 +60,17 @@ io.sockets.on('connection', function (socket) {
     });
 
     var _getTankByOwner = function(owner) {
-        for (var i = 0, length = objects.length; i < length; i++) {
-            return objects[i];
-        };
+        return objects[ownerTanks[owner]];
     }
 
     var _controlTankOwnedBy = function(owner, data) {
         var tank = _getTankByOwner(owner);
         // set vector for movement
         tank.vector = _vectorConvert(data.direction);
+
+        if (data.state == 'stop') {
+            tank.vector = {x:0, y:0};
+        }
 
         socket.broadcast.emit('moveTank', {
             object: tank

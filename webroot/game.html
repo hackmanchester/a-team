@@ -3,63 +3,52 @@
     <head>
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="/css/game.css" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-        <script src="/js/underscore.js"></script>
-        <script src="/js/gameloop.js"></script>
-        <script src="/js/gamemanager.js"></script>
-        <script src="/js/gameobject.js"></script>
-        <script src="/js/tank.js"></script>
-        <script src="/js/tankCanvas.js"></script>
+        <link rel="stylesheet" href="css/game.css" />
+        <script src="js/jquery.min.js"></script>
+        <script src='js/socket.io.js'></script>
+        <script src="js/underscore.js"></script>
+        <script src="js/gameloop.js"></script>
+        <script src="js/gamemanager.js"></script>
+        <script src="js/gameobject.js"></script>
+        <script src="js/tank.js"></script>
+        <script src="js/tankCanvas.js"></script>
         
     </head>
     <body>
         <canvas id="gamearea" width="500" height="500"></canvas>
         <script>
             $(document).ready(function() {
-                
                 var canvas = document.getElementById('gamearea');
                 var context = canvas.getContext('2d');
                 Tank.drawer = TankCanvas;
                 GameManager.init(canvas, context);
-                var tankObj = Object.create(Tank);
-                tankObj.x = 30;
-                tankObj.y = 50;
-                
-                GameManager.addObject(tankObj);
-                gameloop();
-                
-                
-                //HACK
-                $(document).keydown(function(evt) {
-                    var vector = {x: 0, y:0};
-                    switch(evt.keyCode) {
-                        //left
-                        case 65:  
-                            vector.x = -1;
-                            vector.y = 0;
-                            break;
-                        //up
-                        case 87:
-                            vector.x = 0;
-                            vector.y = -1;
-                            break;
-                        //right
-                        case 68:
-                            vector.x = 1;
-                            vector.y = 0;
-                            break;
-                        //down
-                        case 83:
-                            vector.x = 0;
-                            vector.y = 1;
-                            break;
-                    }
-					tankObj.vector = vector;
-				});
-                
-                $(document).keyup(function(evt) {
-                    tankObj.vector = GameObject.vector;
+
+                var socket = io.connect(
+                    'http://'+window.location.hostname+':9000/'
+                );
+
+                socket.on('connect', function () {});
+                socket.emit('load');
+                socket.on('load', function(data) {
+                    // Receive bunch of data and populate map with tanks
+                    for (var i in data.objects) {
+                        console.log(i);
+                        var tank = Object.create(Tank);
+                        _.extend(tank, data.objects[i]);
+                        GameManager.addObject(tank);
+                    };
+        
+                    gameloop();
+                });
+
+                socket.on('createTank', function(data){
+                    var tank = Object.create(Tank);
+                    _.extend(tank, data.object);
+                    GameManager.addObject(tank);
+                });
+
+                socket.on('moveTank', function(data) {
+                    GameManager.moveTank(data.object);
                 });
             });
         </script>
