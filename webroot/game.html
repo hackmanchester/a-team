@@ -20,17 +20,17 @@
                 
                 var canvas = document.getElementById('gamearea');
                 var context = canvas.getContext('2d');
-                tank.drawer = tankCanvas;
-                gamemanager.init(canvas, context);
-                var tankObj = Object.create(tank);
+                Tank.drawer = TankCanvas;
+                GameManager.init(canvas, context);
+                var tankObj = Object.create(Tank);
                 tankObj.x = 30;
                 tankObj.y = 50;
                 
-                gamemanager.addObject(tankObj);
-                var tankObj2 = Object.create(tank);
+                GameManager.addObject(tankObj);
+                var tankObj2 = Object.create(Tank);
                 tankObj2.x = 40;
                 tankObj2.y = 100;
-                gamemanager.addObject(tankObj2);
+                GameManager.addObject(tankObj2);
                 gameloop();
             })
         </script>

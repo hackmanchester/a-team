@@ -1,12 +1,12 @@
-var tank = Object.create(gameobject);
+var Tank = Object.create(GameObject);
 
-tank.draw = function(delta) {
+Tank.draw = function(delta) {
     
     this.updatePosition(delta);
     
     this.drawer.draw(this);
 };
 
-tank.updatePosition = function(delta) {
+Tank.updatePosition = function(delta) {
 
 };

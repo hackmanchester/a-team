@@ -1,11 +1,11 @@
 /**
  * Game manager, stores entities, handles events, draws game
  */
-var tankCanvas = {
+var TankCanvas = {
     
     draw : function(tank) {
-        gamemanager.context.fillStyle="#FF0000";
-        gamemanager.context.fillRect(tank.x, tank.y, 10, 10);
+        GameManager.context.fillStyle="#FF0000";
+        GameManager.context.fillRect(tank.x, tank.y, 10, 10);
     }
     
     

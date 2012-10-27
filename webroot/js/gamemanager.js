@@ -1,7 +1,7 @@
 /**
  * Game manager, stores entities, handles events, draws game
  */
-var gamemanager = {
+var GameManager = {
     
     objects : [],
     canvas: null, 
@@ -11,12 +11,16 @@ var gamemanager = {
         this.context = context;
         _.bindAll(this);
     },
+    events: [],
         
     /**
      * Draw the current state of the game, 
      * delta is the time passed since the last frame
      */
     draw: function(delta) {
+        for (event in this.events) {
+            
+        }
         for (i in this.objects) {
             this.objects[i].draw(delta);
         }

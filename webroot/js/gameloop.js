@@ -13,7 +13,7 @@
             var currTime = new Date().getTime();
             var timeToCall = Math.max(0, 16 - (currTime - lastTime));
             var id = window.setTimeout(function() { callback(currTime + timeToCall); }, 
-              timeToCall);
+                timeToCall);
             lastTime = currTime + timeToCall;
             return id;
         };
@@ -35,7 +35,7 @@ function gameloop() {
     time = now;
  
     // Drawing code goes here... for example updating an 'x' position:
-    gamemanager.draw(dt);
+    GameManager.draw(dt);
     
 }
 

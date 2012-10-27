@@ -1,7 +1,7 @@
 /**
  * Game manager, stores entities, handles events, draws game
  */
-var gameobject = {
+var GameObject = {
     x: 0,
     y: 0,
     
