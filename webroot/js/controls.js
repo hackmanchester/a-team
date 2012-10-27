@@ -1,6 +1,7 @@
 // Client
 $(function(){
     var controller_id = Math.random()+'';
+    var mouseIsDown = false;
     var socket = io.connect(
         'http://'+window.location.hostname+':9000/'
     );
@@ -19,15 +20,23 @@ $(function(){
     // Move events
     $('div[data-type=move]').mousedown(function(){
         _emitControlEvent(socket, this, 'start');
-
-    }).bind('mouseup', function() {
-        _emitControlEvent(socket, this, 'stop');
+        mouseIsDown = true;
+    }).bind('mouseup mouseleave', function() {
+        if (mouseIsDown) {
+            _emitControlEvent(socket, this, 'stop');
+            mouseIsDown = false
+        }
     });
 
     // Shoot events
     $('div[data-type=shoot]').mousedown(function(){
         _emitControlEvent(socket, this, 'start');
-    }).bind('mouseup', function() {
+        mouseIsDown = true;
+    }).bind('mouseup mouseleave', function() {
+        if (mouseIsDown) {
+            _emitControlEvent(socket, this, 'stop');
+            mouseIsDown = false;
+        }
         _emitControlEvent(socket, this, 'stop');
     });
 
