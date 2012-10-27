@@ -66,7 +66,7 @@ io.sockets.on('connection', function (socket) {
     var _controlTankOwnedBy = function(owner, data) {
         var tank = _getTankByOwner(owner);
         // set vector for movement
-        tank.vector = _vectorConvert(data.direction);
+        tank.vector = _vectorConvert(data.action);
 
         if (data.state == 'stop') {
             tank.vector = {x:0, y:0};
