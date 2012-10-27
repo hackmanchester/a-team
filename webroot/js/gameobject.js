@@ -4,7 +4,7 @@
 var GameObject = {
     x: 0,
     y: 0,
-    
+    speed: 0,
     vector: {
         x: 0, 
         y: 0
@@ -18,6 +18,11 @@ var GameObject = {
     
     draw : function(delta) {
         
+    },
+    
+    updatePosition: function(delta) {
+        this.x += this.vector.x * delta * this.speed * 0.02;
+        this.y += this.vector.y * delta * this.speed * 0.02;
     }
     
 }

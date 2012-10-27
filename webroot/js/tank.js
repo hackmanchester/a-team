@@ -1,5 +1,7 @@
 var Tank = Object.create(GameObject);
 
+Tank.speed = 10;
+
 Tank.draw = function(delta) {
     
     this.updatePosition(delta);
@@ -7,6 +9,4 @@ Tank.draw = function(delta) {
     this.drawer.draw(this);
 };
 
-Tank.updatePosition = function(delta) {
 
-};

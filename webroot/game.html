@@ -27,12 +27,41 @@
                 tankObj.y = 50;
                 
                 GameManager.addObject(tankObj);
-                var tankObj2 = Object.create(Tank);
-                tankObj2.x = 40;
-                tankObj2.y = 100;
-                GameManager.addObject(tankObj2);
                 gameloop();
-            })
+                
+                
+                //HACK
+                $(document).keydown(function(evt) {
+                    var vector = {x: 0, y:0};
+                    switch(evt.keyCode) {
+                        //left
+                        case 65:  
+                            vector.x = -1;
+                            vector.y = 0;
+                            break;
+                        //up
+                        case 87:
+                            vector.x = 0;
+                            vector.y = -1;
+                            break;
+                        //right
+                        case 68:
+                            vector.x = 1;
+                            vector.y = 0;
+                            break;
+                        //down
+                        case 83:
+                            vector.x = 0;
+                            vector.y = 1;
+                            break;
+                    }
+					tankObj.vector = vector;
+				});
+                
+                $(document).keyup(function(evt) {
+                    tankObj.vector = GameObject.vector;
+                });
+            });
         </script>
     </body>
 </html>
