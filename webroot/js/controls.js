@@ -19,16 +19,14 @@ $(function(){
     // Move events
     $('div[data-type=move]').mousedown(function(){
         _emitControlEvent(socket, this, 'start');
-    });
-    $('div[data-type=move]').mouseup(function(){
+    }).bind('mouseup mouseleave', function() {
         _emitControlEvent(socket, this, 'stop');
     });
 
     // Shoot events
     $('div[data-type=shoot]').mousedown(function(){
         _emitControlEvent(socket, this, 'start');
-    });
-    $('div[data-type=shoot]').mouseup(function(){
+    }).bind('mouseup mouseleave', function() {
         _emitControlEvent(socket, this, 'stop');
     });
 
