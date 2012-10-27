@@ -23,7 +23,7 @@ io.sockets.on('connection', function (socket) {
 
     var _controlTankOwnedBy = function(owner, data) {
         console.log(
-            owner +"'s tank "+data.state+" "+data.type+" "+data.direction
+            owner +"'s tank "+data.state+" "+data.type+" "+ data.action
         );
     }
 
