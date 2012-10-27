@@ -1,8 +1,10 @@
-var http = require('http');
+// Server
+var io = require('socket.io').listen(9000);
 
+io.sockets.on('connection', function (client) {
+	console.log('moo');
+	client.on('control', function(data) {
+		console.log(data);
+	});
 
-http.createServer(function (request, response) {
-  response.writeHead(200, {'Content-Type': 'text/html'});
-  response.write('<h1>hello, i know nodejitsu.</h1>');
-  response.end();
-}).listen(8080); // the server will listen on port 8080
+});
