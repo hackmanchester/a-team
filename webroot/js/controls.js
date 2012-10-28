@@ -121,6 +121,19 @@ $(function(){
                 }
             });
 
+            // respawn
+            $('div[data-type=respawn]').mousedown(function(){
+                _emitControlEvent(socket, this, 'start');
+                mouseIsDown = true;
+                $(this).css({ opacity: 0.5, background: "#333" });
+            }).bind('mouseup mouseleave', function() {
+                if (mouseIsDown) {
+                    _emitControlEvent(socket, this, 'stop');
+                    mouseIsDown = false;
+                    $(this).css('background','transparent');
+                }
+            });
+
             socket.emit('join-control', {
                 controller_id: controller_id
             });    

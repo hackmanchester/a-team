@@ -28,6 +28,13 @@ var GameObject = {
         
     },
     
+    predictPosition: function(delta) {
+        return {
+            x: this.vector.x * delta * this.speed * 0.02;
+            y: this.vector.y * delta * this.speed * 0.02;
+        };
+    },
+
     updatePosition: function(delta) {
         this.x += this.vector.x * delta * this.speed * 0.02;
         this.y += this.vector.y * delta * this.speed * 0.02;

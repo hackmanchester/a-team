@@ -78,14 +78,29 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.event('tank', data);
     });
 
+    var _terrainCollision = function(tank, delta) {
+        // Test for terrain
+        for (var i in objects) {
+            if (objects[i].disabled) continue;
+            if (objects[i].type == 'obstable') {
+                if ((Math.abs(objects[i].x - tank.x) < 20) && (Math.abs(objects[i].y - tank.y) < 20)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     var _dettectCollision = function(tank) {
         // Test mines
         for (var i in objects) {
             if (objects[i].disabled) continue;
-            if (objects[i].type !== 'mine') continue;
-            if ((Math.abs(objects[i].x - tank.x) < 20) && (Math.abs(objects[i].y - tank.y) < 20)) {
-                _tripMine(tank, objects[i]);
-                return;
+            switch(objects[i].type) {
+                case 'mine':
+                    if ((Math.abs(objects[i].x - tank.x) < 20) && (Math.abs(objects[i].y - tank.y) < 20)) {
+                        return _tripMine(tank, objects[i]);
+                    }
+                    break;
             }
         }
     }
@@ -104,6 +119,9 @@ io.sockets.on('connection', function (socket) {
     var update = function(tank) {
         var delta = (microtime.now() - time)/1000;
         time = microtime.now();
+        if (_terrainCollision(tank, tank.predictPosition(delta))) {
+            return;
+        }
         tank.updatePosition(delta);
         socket.broadcast.emit('moveTank', {
             object: tank
