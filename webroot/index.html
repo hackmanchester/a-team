@@ -37,7 +37,6 @@
                 socket.on('load', function(data) {
                     // Receive bunch of data and populate map with tanks
                     for (var i in data.objects) {
-                        console.log(i);
                         var tank = Object.create(Tank);
                         _.extend(tank, data.objects[i]);
                         GameManager.addObject(tank);
@@ -60,6 +59,10 @@
 
                 socket.on('moveTank', function(data) {
                     GameManager.moveTank(data.object);
+                });
+
+                socket.on('updateTank', function(data) {
+                    //console.log(data);
                 });
             });
         </script>

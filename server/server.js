@@ -35,6 +35,7 @@ io.sockets.on('connection', function (socket) {
     socket.on('load', function() {
         console.log('Client connected, send map to them');
         socket.emit('load', {objects: objects});
+        //console.log(objects);
     });
 
     socket.on('join-control', function(data){
