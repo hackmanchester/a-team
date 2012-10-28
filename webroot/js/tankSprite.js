@@ -55,6 +55,11 @@ var TankSprite = {
             context.fillStyle = '#00FF00';
             context.fillRect(tank.x, tank.y-7, this.width * tank.hp / Tank.hp, 3);
         }
+        context.fillStyle = '#FFFFFF';
+        context.textAlign = "center";
+        context.font = "bold 12px sans-serif";
+        context.fillText(tank.owner, tank.x + this.width / 2, tank.y+this.height+10);
+
     }
 
 }

@@ -14,6 +14,7 @@ includeInThisContext('../webroot/js/gameobject.js');
 includeInThisContext('../webroot/js/tank.js');
 includeInThisContext('../webroot/js/shell.js');
 includeInThisContext('../webroot/js/mine.js');
+includeInThisContext('../webroot/js/obstacle.js');
 
 
 var _vectorConvert = function(direction) {
@@ -32,6 +33,17 @@ var _vectorConvert = function(direction) {
 var controllers = {};
 var ownerTanks = {};
 var objects = {};
+
+//Create obstacles for this instance
+for (var i = 0; i < 8; i ++) {
+    var obstacle = Object.create(Obstacle);
+    obstacle.kind = Math.round(Math.random());
+    obstacle.x = Math.round(Math.random() * 600 / 40) * 40;
+    obstacle.y = Math.round(Math.random() * 500 / 40) * 40;
+    obstacle.getId();
+    objects[obstacle.id] = obstacle;
+}
+
 io.sockets.on('connection', function (socket) {
     // Send everyone's position to bootstrap client
     socket.on('load', function() {
@@ -51,7 +63,7 @@ io.sockets.on('connection', function (socket) {
         ownerTanks[data.controller_id] = tank.id;
         tank.x = 10;
         tank.y = 10;
-
+        tank.name = 'Tank';
         objects[tank.id] = tank;
 
         // Send update event to everyone
@@ -66,14 +78,29 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.event('tank', data);
     });
 
+    var _terrainCollision = function(tank, predicted) {
+        // Test for terrain
+        for (var i in objects) {
+            if (objects[i].disabled) continue;
+            if (objects[i].type == 'Obstacle') {
+                if ((Math.abs(objects[i].x - predicted.x) < 40) && (Math.abs(objects[i].y - predicted.y) < 40)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     var _dettectCollision = function(tank) {
         // Test mines
         for (var i in objects) {
             if (objects[i].disabled) continue;
-            if (objects[i].type !== 'mine') continue;
-            if ((Math.abs(objects[i].x - tank.x) < 20) && (Math.abs(objects[i].y - tank.y) < 20)) {
-                _tripMine(tank, objects[i]);
-                return;
+            switch(objects[i].type) {
+                case 'mine':
+                    if ((Math.abs(objects[i].x - tank.x) < 20) && (Math.abs(objects[i].y - tank.y) < 20)) {
+                        return _tripMine(tank, objects[i]);
+                    }
+                    break;
             }
         }
     }
@@ -92,6 +119,13 @@ io.sockets.on('connection', function (socket) {
     var update = function(tank) {
         var delta = (microtime.now() - time)/1000;
         time = microtime.now();
+        if (_terrainCollision(tank, tank.predictPosition(delta))) {
+            tank.vector = {x:0, y:0};
+            socket.broadcast.emit('moveTank', {
+                object: tank
+            })
+            return;
+        }
         tank.updatePosition(delta);
         socket.broadcast.emit('moveTank', {
             object: tank
@@ -130,16 +164,27 @@ io.sockets.on('connection', function (socket) {
             return false;
         }
         
+
         // Final check of orientation
+        // Right
         if (a.orientation.x == 1 && a.x > b.x) {
             return false;
         }
 
+        // Down
         if (a.orientation.y == 1 && a.y > b.y) {
             return false;
         }
 
-        // Return distance
+        // Left
+        if (a.orientation.x == -1 && a.x < b.x) {
+            return false;
+        }
+
+        // Up
+        if (a.orientation.y == -1 && a.y < b.y) {
+            return false;
+        }
         return Math.max(Math.abs(a.x - b.x), Math.abs(a.y - b.y));
         
     }

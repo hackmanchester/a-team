@@ -4,6 +4,7 @@ Tank.speed = 10;
 
 Tank.sprite = null;
 Tank.hp = 10;
+Tank.type = 'Tank';
 Tank.draw = function(delta) {
     if (this.disabled) {
     	return false;

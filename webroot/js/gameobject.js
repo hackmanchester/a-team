@@ -7,6 +7,7 @@ var GameObject = {
     y: 0,
     speed: 0,
     facing: 'up',
+    type: 'GameObject',
     vector: {
         x: 0, 
         y: 0
@@ -27,6 +28,13 @@ var GameObject = {
         
     },
     
+    predictPosition: function(delta) {
+        return {
+            x: this.x + this.vector.x * delta * this.speed * 0.02,
+            y: this.y + this.vector.y * delta * this.speed * 0.02
+        };
+    },
+
     updatePosition: function(delta) {
         this.x += this.vector.x * delta * this.speed * 0.02;
         this.y += this.vector.y * delta * this.speed * 0.02;
@@ -44,6 +52,6 @@ var GameObject = {
         }
     },
     getId: function() {
-        this.id = Math.random()+'';
+        this.id = this.type + '-' + Math.random();
     }
 }

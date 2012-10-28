@@ -20,7 +20,8 @@
         <script src="js/background.js"></script>
         <script src="js/particle.js"></script>
         <script src="js/explosion.js"></script>
-
+        <script src="js/obstacleSprite.js"></script>
+        <script src="js/obstacle.js"></script>
     </head>
     <body>
         <div id="wrapper">
@@ -54,11 +55,11 @@
                     socket.emit('load');
                     socket.on('load', function(data) {
                         // Receive bunch of data and populate map with tanks
-                        for (var i in data.objects) {
-                            console.log(i);
-                            var tank = Object.create(Tank);
-                            _.extend(tank, data.objects[i]);
-                            GameManager.addObject(tank);
+                        for (var i in data.objects) {                
+                            var parts = i.split('-');
+                            var base = Object.create(window[parts[0]]);
+                            _.extend(base, data.objects[i]);
+                            GameManager.addObject(base);
                         };
             
                         gameloop();
