@@ -67,23 +67,35 @@ io.sockets.on('connection', function (socket) {
     });
 
     var time = null;
-    var _controlTank = function(tank, data) {
-        if (data.state == 'stop') {
-            // @TODO: Move this code into setTimeout
-            // Save tank's x and y after move is done
-            var delta = (microtime.now() - time)/1000;
-            tank.updatePosition(delta);
-
-            // Stop tank
-            tank.vector = {x:0, y:0};
-        } else {
-            time = microtime.now();
-            tank.vector = _vectorConvert(data.action);
-            tank.orientation = tank.vector;
-        }
+    var update = function(tank) {
+        var delta = (microtime.now() - time)/1000;
+        time = microtime.now();
+        tank.updatePosition(delta);
         socket.broadcast.emit('moveTank', {
             object: tank
         });
+        console.log('tank position updated');
+    }
+    var interval = null;
+    var _controlTank = function(tank, data) {
+        if (data.state == 'start') {
+            if (! interval) {
+                time = microtime.now();
+                tank.vector = _vectorConvert(data.action);
+                tank.orientation = tank.vector;
+                update(tank);
+                interval = setInterval(function(){
+                    update(tank);
+                }, 100);
+            }
+        } else {
+            clearInterval(interval);
+            interval = null;
+            // Stop tank
+            update(tank);
+            tank.vector = {x:0, y:0};
+            update(tank);
+        }
     }
 
     var _collide = function(a, b) {
@@ -114,6 +126,11 @@ io.sockets.on('connection', function (socket) {
         // Hitscan to other tanks
         var closest = {id:null, distance:false};
         for (var i in objects) {
+            // Skip if this is a mine
+            // @TODO: make this skip all but shootable shit
+            if (objects[i].type == 'mine') continue;
+
+            // Calculate distance to closest enemy
             var distance = _collide(tank, objects[i]);
             if (distance && (!closest.distance || closest.distance > distance)) {
                 closest = {id: objects[i].id, distance:distance};
@@ -223,7 +240,7 @@ io.sockets.on('connection', function (socket) {
         var mhp = _getMineHardpoint(tank);
         mine.x = mhp.x;
         mine.y = mhp.y;
-        //objects[mine.id] = mine;
+        objects[mine.id] = mine;
         socket.broadcast.emit('createMine', {object:mine});
     }
 
