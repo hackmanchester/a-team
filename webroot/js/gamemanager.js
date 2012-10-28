@@ -24,7 +24,9 @@ var GameManager = {
     draw: function(delta) {
         this.context.clearRect(0, 0, this.width, this.height);
         for (i in this.objects) {
-            this.objects[i].draw(delta);
+            if (!this.objects[i].draw(delta)) {
+                delete(this.objects[i]);
+            }
         }
         for (i in this.particles) {
             if (!this.particles[i].draw(delta)) {
