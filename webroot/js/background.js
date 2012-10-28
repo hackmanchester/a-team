@@ -4,8 +4,8 @@
 var Background = {  
     imageSrc: 'imgs/terrain.png',
     image: null,
-    tileWidth: 41,
-    tileHeight: 41,
+    tileWidth: 40,
+    tileHeight: 40,
     canvas: null,
     context: null,
     
