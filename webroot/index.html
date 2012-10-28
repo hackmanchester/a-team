@@ -68,6 +68,11 @@
                         gameloop();
                     });
 
+                    socket.on('score', function(data) {
+                        GameManager.score[data.killed].deaths++;
+                        GameManager.score[data.by].kills++;
+                    });
+
                     socket.on('createTank', function(data){
                         $('#message').html(data.object.owner +' has joined the game!').fadeIn(400).delay(2000).html('');
                         var tank = Object.create(Tank);

@@ -5,6 +5,7 @@ var GameManager = {
     
     objects : {},
     particles: {},
+    score: {},
     canvas: null, 
     context: null,
     width: 990,
@@ -37,6 +38,9 @@ var GameManager = {
     
     addObject: function(gameObject) {
         this.objects[gameObject.id] = gameObject;
+        if (! this.score[gameObject.owner]) {
+            this.score[gameObject.owner] = {kills:0, deaths:0};
+        }
     },
     
     addParticle: function(gameObject) {
