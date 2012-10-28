@@ -30,8 +30,8 @@ var GameObject = {
     
     predictPosition: function(delta) {
         return {
-            x: this.vector.x * delta * this.speed * 0.02;
-            y: this.vector.y * delta * this.speed * 0.02;
+            x: this.x + this.vector.x * delta * this.speed * 0.02,
+            y: this.y + this.vector.y * delta * this.speed * 0.02
         };
     },
 

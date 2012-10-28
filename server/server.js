@@ -78,12 +78,12 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.event('tank', data);
     });
 
-    var _terrainCollision = function(tank, delta) {
+    var _terrainCollision = function(tank, predicted) {
         // Test for terrain
         for (var i in objects) {
             if (objects[i].disabled) continue;
-            if (objects[i].type == 'obstable') {
-                if ((Math.abs(objects[i].x - tank.x) < 20) && (Math.abs(objects[i].y - tank.y) < 20)) {
+            if (objects[i].type == 'Obstacle') {
+                if ((Math.abs(objects[i].x - predicted.x) < 40) && (Math.abs(objects[i].y - predicted.y) < 40)) {
                     return true;
                 }
             }
@@ -120,6 +120,10 @@ io.sockets.on('connection', function (socket) {
         var delta = (microtime.now() - time)/1000;
         time = microtime.now();
         if (_terrainCollision(tank, tank.predictPosition(delta))) {
+            tank.vector = {x:0, y:0};
+            socket.broadcast.emit('moveTank', {
+                object: tank
+            })
             return;
         }
         tank.updatePosition(delta);
