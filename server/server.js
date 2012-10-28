@@ -1,5 +1,7 @@
 var io = require('socket.io').listen(9000);
-io.set('log level', 5);
+io.set('log level', 2);
+
+var microtime = require('microtime');
 
 // Import external files
 var fs = require('fs');
@@ -62,14 +64,22 @@ io.sockets.on('connection', function (socket) {
     var _getTankByOwner = function(owner) {
         return objects[ownerTanks[owner]];
     }
-
+    var time = null;
     var _controlTankOwnedBy = function(owner, data) {
         var tank = _getTankByOwner(owner);
         // set vector for movement
-        tank.vector = _vectorConvert(data.action);
 
         if (data.state == 'stop') {
+            // @TODO: Move this code into setTimeout
+            // Save tank's x and y after move is done
+            var delta = (microtime.now() - time)/1000;
+            tank.updatePosition(delta);
+
+            // Stop tank
             tank.vector = {x:0, y:0};
+        } else {
+            time = microtime.now();
+            tank.vector = _vectorConvert(data.action);
         }
 
         socket.broadcast.emit('moveTank', {
