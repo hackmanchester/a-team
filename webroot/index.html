@@ -19,8 +19,11 @@
         <script src="js/background.js"></script>
     </head>
     <body>
-        <canvas id="background" width="500" height="500"></canvas>
+        
+        <div id="flashmessage"></div>
+        <br />
         <canvas id="gamearea" width="500" height="500"></canvas>
+        <canvas id="background" width="500" height="500"></canvas>
         <script>
             $(document).ready(function() {
                 var canvas = document.getElementById('gamearea');
@@ -47,6 +50,7 @@
                 });
 
                 socket.on('createTank', function(data){
+                    console.log('data');
                     var tank = Object.create(Tank);
                     _.extend(tank, data.object);
                     GameManager.addObject(tank);
@@ -67,6 +71,7 @@
                 socket.on('moveTank', function(data) {
                     GameManager.moveTank(data.object);
                 });
+
 
                 socket.on('updateTank', function(data) {
                     GameManager.objects[data.object.id].hp = data.object.hp;

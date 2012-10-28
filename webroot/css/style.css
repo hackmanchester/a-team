@@ -112,6 +112,7 @@ input[type=text], input[type=password] {
     height: 208px;
     background-image: url(../imgs/controller.png);
     background-repeat: no-repeat;
+    display: none;
 }
 #move_up, #move_down, #move_left, #move_right, #shoot_bullet, #shoot_mine {
     position: relative;
@@ -149,7 +150,7 @@ input[type=text], input[type=password] {
     top: -10px;
     left: 310px;
 }
-#status {
+#status, #name {
     margin: auto;
     text-align: center;
 }
@@ -157,10 +158,4 @@ input[type=text], input[type=password] {
 #move_controls, #shoot_controls {
     width: 220px;
     text-align: center;
-}
-
-input[type=button] {
-}
-.noselect {
-    
 }

@@ -42,7 +42,7 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('join-control', function(data){
         // associate controller with tank
-        controllers[socket.id] = data.controller_id;
+        controllers[socket.id]  = data.controller_id;
 
         // Spawn tank on battlefield
         var tank = Object.create(Tank);
@@ -58,6 +58,7 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.emit('createTank', {
             object: tank
         });
+        
     });
 
     // Main event distribution event =D
