@@ -66,6 +66,12 @@ var TankSprite = {
             tank.owner + ' (' + dk + ')', tank.x + this.width / 2, tank.y+this.height+10
         );
 
+        var back = Background.context 
+        back.globalCompositeOperation = 'darken';
+        back.globalAlpha = 0.01;
+        back.fillStyle = '#ff0000';
+        back.fillRect(tank.x, tank.y, this.width, this.height);
+        
     }
 
 }
