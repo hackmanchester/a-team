@@ -274,21 +274,21 @@ io.sockets.on('connection', function (socket) {
             // right
             case (o.x == 1):
                 point.x -=20;
-                point.y +=18;
+                point.y +=20;
                 break;
             // down
             case (o.y == 1):
-                point.x += 18;
+                point.x += 20;
                 point.y -= 20;
                 break;
             // left
             case (o.x == -1):
                 point.x +=60;
-                point.y +=18;
+                point.y +=20;
                 break;
             // up
             case (o.y == -1):
-                point.x += 18;
+                point.x += 20;
                 point.y += 60;
                 break;
         }
