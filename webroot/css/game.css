@@ -1,15 +1,3 @@
-/* 
-    Document   : test.css
-    Created on : Oct 27, 2012, 5:58:41 PM
-    Author     : wcrouch
-    Description:
-        Purpose of the stylesheet follows.
-*/
-
-#ball {
-   
-}
-
 #background {
     z-index: 100;
     position:absolute;

@@ -6,7 +6,7 @@ var GameManager = {
     objects : {},
     canvas: null, 
     context: null,
-    width: 500,
+    width: 600,
     height: 500,
     
     init : function(canvas, context) {
