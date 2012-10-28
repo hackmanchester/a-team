@@ -38,8 +38,8 @@ var objects = {};
 for (var i = 0; i < 8; i ++) {
     var obstacle = Object.create(Obstacle);
     obstacle.kind = Math.round(Math.random());
-    obstacle.x = Math.round(Math.random() * 990 / 40) * 40;
-    obstacle.y = Math.round(Math.random() * 550 / 40) * 40;
+    obstacle.x = Math.round(Math.random() * 750 / 40) * 40;
+    obstacle.y = Math.round(Math.random() * 500 / 40) * 40;
     obstacle.getId();
     objects[obstacle.id] = obstacle;
 }
@@ -336,8 +336,8 @@ io.sockets.on('connection', function (socket) {
 
     var _randomLocation = function() {
         return {
-            x: Math.floor(Math.random() * 990),
-            y: Math.floor(Math.random() * 550)
+            x: Math.floor(Math.random() * 750),
+            y: Math.floor(Math.random() * 500)
         }
     }
 

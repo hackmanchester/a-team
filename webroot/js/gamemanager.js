@@ -8,8 +8,8 @@ var GameManager = {
     score: {},
     canvas: null, 
     context: null,
-    width: 990,
-    height: 550,
+    width: 750,
+    height: 500,
     
     init : function(canvas, context) {
         this.canvas = canvas;
