@@ -71,7 +71,7 @@
                     socket.on('createShell', function(data){
                         var shell = Object.create(Shell);
                         _.extend(shell, data.object);
-                        GameManager.addObject(shell);
+                        GameManager.addParticle(shell);
                     });
 
                     socket.on('moveTank', function(data) {

@@ -4,6 +4,7 @@
 var GameManager = {
     
     objects : {},
+    particles: {},
     canvas: null, 
     context: null,
     width: 600,
@@ -25,10 +26,19 @@ var GameManager = {
         for (i in this.objects) {
             this.objects[i].draw(delta);
         }
+        for (i in this.particles) {
+            if (!this.particles[i].draw(delta)) {
+                delete(this.particles[i]);
+            }
+        }
     },
     
     addObject: function(gameObject) {
         this.objects[gameObject.id] = gameObject;
+    },
+    
+    addParticle: function(gameObject) {
+        this.particles[gameObject.id] = gameObject;
     }, 
     
     bindEvents: function() {
@@ -37,6 +47,9 @@ var GameManager = {
 
     moveTank: function(tank) {
         this.objects[tank.id].vector = tank.vector;
+        this.objects[tank.id].orientation = tank.orientation;
+        this.objects[tank.id].x = tank.x;
+        this.objects[tank.id].y = tank.y;
     }
     
 }
