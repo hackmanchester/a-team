@@ -164,16 +164,27 @@ io.sockets.on('connection', function (socket) {
             return false;
         }
         
+
         // Final check of orientation
+        // Right
         if (a.orientation.x == 1 && a.x > b.x) {
             return false;
         }
 
+        // Down
         if (a.orientation.y == 1 && a.y > b.y) {
             return false;
         }
 
-        // Return distance
+        // Left
+        if (a.orientation.x == -1 && a.x < b.x) {
+            return false;
+        }
+
+        // Up
+        if (a.orientation.y == -1 && a.y < b.y) {
+            return false;
+        }
         return Math.max(Math.abs(a.x - b.x), Math.abs(a.y - b.y));
         
     }
@@ -195,7 +206,7 @@ io.sockets.on('connection', function (socket) {
         }
 
         // Fire the shell
-        _createShell(tank, closest.distance-10);
+        _createShell(tank, closest.distance);
 
         // Hit !
         if (closest.id) {
