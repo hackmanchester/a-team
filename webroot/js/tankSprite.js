@@ -69,9 +69,17 @@ var TankSprite = {
         if (tank.vector.x != 0 || tank.vector.y != 0) {
             var back = Background.context 
             back.globalCompositeOperation = 'darken';
-            back.globalAlpha = 0.03;
+            back.globalAlpha = 0.04;
             back.fillStyle = '#8b4c39';
-            back.fillRect(tank.x, tank.y, this.width, this.height);
+            
+            if (tank.vector.x != 0) { 
+                back.fillRect(tank.x, tank.y, this.width, this.height /3);
+                back.fillRect(tank.x, tank.y + this.width * 2/3, this.width, this.height /3);
+            }
+            if (tank.vector.y != 0) { 
+                back.fillRect(tank.x, tank.y, this.width/3, this.height);
+                back.fillRect(tank.x + this.width * 2/3, tank.y, this.width/3, this.height);
+            }
         }
         
     }
