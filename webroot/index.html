@@ -25,18 +25,21 @@
     </head>
     <body>
         <div id="wrapper">
-            <div id="content">
-                <div id="header">
-                    <h1>Tank Battle</h1> 
-                    <div id="message">&nbsp;</div>
-                </div>
-                
-                <br />
-                <canvas id="gamearea" width="600" height="500"></canvas>
-                <canvas id="background" width="600" height="500"></canvas>
-                <a href="" id="controllerOpen">Open The Controller</a>
+            <div id="header">
+                <img src="./imgs/logo.png" alt="MMO BATTLE TANKS" />
+                <div id="message">&nbsp;</div>
+            </div>
+            <div id="canvasCont">
+                <canvas id="gamearea" width="950" height="550"></canvas>
+                <canvas id="background" width="950" height="550"></canvas>
+            </div>
+            <div id="controllerLinkCont">
+                <a href="" id="controllerOpen">
+                    <img src="./imgs/controllerbtn.png" alt="Open the controller" />
+                </a>
             </div>
         </div>
+        
             <script>
                 $(document).ready(function() {
                     var canvas = document.getElementById('gamearea');
@@ -66,7 +69,7 @@
                     });
 
                     socket.on('createTank', function(data){
-                        $('#message').html(data.object.owner +' has joined the game!').fadeIn(400).delay(2000).fadeOut(400);
+                        $('#message').html(data.object.owner +' has joined the game!').fadeIn(400).delay(2000).html('');
                         var tank = Object.create(Tank);
                         _.extend(tank, data.object);
                         GameManager.addObject(tank);

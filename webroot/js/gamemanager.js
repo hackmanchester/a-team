@@ -7,8 +7,8 @@ var GameManager = {
     particles: {},
     canvas: null, 
     context: null,
-    width: 600,
-    height: 500,
+    width: 990,
+    height: 550,
     
     init : function(canvas, context) {
         this.canvas = canvas;

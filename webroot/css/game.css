@@ -1,15 +1,17 @@
 #background {
     z-index: 100;
     position:relative;
-    left:0px;
-    top:-505px;
+    left:px;
+    top:-585px;
+    border: 1px solid black;
 }
 
 #gamearea {
     z-index: 200;
     position:relative;
-    left:0px;
-    top:0px;
+    left:-10px;
+    top:-20px;
+    border: 10px solid black;
 }
 
 #controllerOpen {
