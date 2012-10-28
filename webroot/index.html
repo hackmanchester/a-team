@@ -13,6 +13,8 @@
         <script src="js/tankSprite.js"></script>
         <script src="js/tank.js"></script>
         <script src="js/tankCanvas.js"></script>
+        <script src="js/shell.js"></script>
+        <script src="js/shellCanvas.js"></script>
         
     </head>
     <body>
@@ -22,6 +24,7 @@
                 var canvas = document.getElementById('gamearea');
                 var context = canvas.getContext('2d');
                 Tank.drawer = TankCanvas;
+                Shell.drawer = ShellCanvas;
                 GameManager.init(canvas, context);
 
                 var socket = io.connect(
@@ -46,6 +49,12 @@
                     var tank = Object.create(Tank);
                     _.extend(tank, data.object);
                     GameManager.addObject(tank);
+                });
+
+                socket.on('createShell', function(data){
+                    var shell = Object.create(Shell);
+                    _.extend(shell, data.object);
+                    GameManager.addObject(shell);
                 });
 
                 socket.on('moveTank', function(data) {

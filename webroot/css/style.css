@@ -110,7 +110,7 @@ input[type=text], input[type=password] {
 #controller {
     width: 480px;
     height: 208px;
-    background-image: url(/imgs/controller.png);
+    background-image: url(../imgs/controller.png);
     background-repeat: no-repeat;
 }
 #move_up, #move_down, #move_left, #move_right, #shoot_bullet, #shoot_mine {

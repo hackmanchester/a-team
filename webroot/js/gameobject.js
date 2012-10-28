@@ -11,6 +11,10 @@ var GameObject = {
         x: 0, 
         y: 0
     },
+    orientation: {
+        x: 0,
+        y: -1
+    },
     
     drawer: null,
     
