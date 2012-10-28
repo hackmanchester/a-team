@@ -69,6 +69,7 @@ io.sockets.on('connection', function (socket) {
     var _dettectCollision = function(tank) {
         // Test mines
         for (var i in objects) {
+            if (objects[i].disabled) continue;
             if (objects[i].type !== 'mine') continue;
             if ((Math.abs(objects[i].x - tank.x) < 20) && (Math.abs(objects[i].y - tank.y) < 20)) {
                 _tripMine(tank, objects[i]);
@@ -83,8 +84,8 @@ io.sockets.on('connection', function (socket) {
         // Sync changes to all clients
         socket.broadcast.emit('updateTank', {object:objects[tank.id]});
         socket.broadcast.emit('tripMine', {object:objects[mine.id]});
-        delete(objects[tank.id]);
-        delete(objects[mine.id]);
+        objects[tank.id].disabled = true;
+        objects[mine.id].disabled = true;
     }
 
     var time = null;
@@ -149,6 +150,7 @@ io.sockets.on('connection', function (socket) {
         for (var i in objects) {
             // Skip if this is a mine
             // @TODO: make this skip all but shootable shit
+            if (objects[i].disabled) continue;
             if (objects[i].type == 'mine') continue;
 
             // Calculate distance to closest enemy
@@ -171,7 +173,7 @@ io.sockets.on('connection', function (socket) {
 
             // Delete from server side
             if (objects[closest.id].hp <= 0) {
-                delete(objects[closest.id]);
+                objects[closest.id].disabled = true;
             }
         }
 
@@ -266,11 +268,21 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.emit('createMine', {object:mine});
     }
 
+    var _respawn = function(tank) {
+        tank.hp = Tank.hp;
+        tank.x = 10;
+        tank.y = 10;
+        objects[tank.id] = tank;
+        socket.broadcast.emit('respawnTank', {object:tank});
+    }
+
     // Listen for controller
     socket.on('control', function(data) {
         if (!controllers[socket.id]) {
             return;
         }
+
+        // @TODO: Make sure the following is safe.
         var tank = objects[ownerTanks[controllers[socket.id]]];
         console.log(
             tank.owner +"'s tank "+data.state+" "+data.type+" "+ data.action
@@ -285,6 +297,8 @@ io.sockets.on('connection', function (socket) {
                     case 'mine':
                         return _placeMine(tank);
                 }
+            case 'respawn':
+                return _respawn(tank);
         }
     });
 });
