@@ -66,6 +66,27 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.event('tank', data);
     });
 
+    var _dettectCollision = function(tank) {
+        // Test mines
+        for (var i in objects) {
+            if (objects[i].type !== 'mine') continue;
+            if ((Math.abs(objects[i].x - tank.x) < 20) && (Math.abs(objects[i].y - tank.y) < 20)) {
+                _tripMine(tank, objects[i]);
+                return;
+            }
+        }
+    }
+
+    var _tripMine = function(tank, mine) {
+        // Unlucky.
+        objects[tank.id].hp = 0;
+        // Sync changes to all clients
+        socket.broadcast.emit('updateTank', {object:objects[tank.id]});
+        socket.broadcast.emit('tripMine', {object:objects[mine.id]});
+        delete(objects[tank.id]);
+        delete(objects[mine.id]);
+    }
+
     var time = null;
     var update = function(tank) {
         var delta = (microtime.now() - time)/1000;
@@ -74,7 +95,7 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.emit('moveTank', {
             object: tank
         });
-        console.log('tank position updated');
+        _dettectCollision(tank);
     }
     var interval = null;
     var _controlTank = function(tank, data) {
@@ -194,23 +215,23 @@ io.sockets.on('connection', function (socket) {
         switch (true) {
             // right
             case (o.x == 1):
-                point.x +=10;
+                point.x -=20;
                 point.y +=18;
                 break;
             // down
             case (o.y == 1):
                 point.x += 18;
-                point.y += 10;
+                point.y -= 20;
                 break;
             // left
             case (o.x == -1):
-                point.x +=35;
+                point.x +=60;
                 point.y +=18;
                 break;
             // up
             case (o.y == -1):
                 point.x += 18;
-                point.y += 35;
+                point.y += 60;
                 break;
         }
 

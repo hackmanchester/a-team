@@ -89,6 +89,10 @@
                     socket.on('updateTank', function(data) {
                         GameManager.objects[data.object.id].hp = data.object.hp;
                     });
+
+                    socket.on('tripMine', function(data) {
+                        delete(GameManager.objects[data.object.id]);
+                    });
                 });
 
                 // Open the controllers
