@@ -14,7 +14,6 @@ var TankSprite = {
         right: [[0, 3], [1, 3]]
     },
     
-    
     time:0,
     
     frameTime:100,
@@ -39,16 +38,22 @@ var TankSprite = {
         }
         var state = this.states[tank.facing][this.currentFrame];
 
-        sourceX = state[0] * this.width;
-        sourceY = state[1] * this.height;
+        var sourceX = state[0] * this.width;
+        var sourceY = state[1] * this.height;
+        
+        var context = GameManager.context;
 
-        GameManager.context.drawImage(
+        context.drawImage(
             this.image, sourceX, sourceY,
             this.width, this.height,
             tank.x, tank.y,
             this.width, this.height);
             
+        context.fillStyle = '#FF0000';
+        context.fillRect(tank.x, tank.y-8, this.width, 5);
         
+        context.fillStyle = '#00FF00';
+        context.fillRect(tank.x, tank.y-7, this.width * tank.hp / Tank.hp, 3);
     }
 
 }

@@ -12,7 +12,6 @@
         <script src="js/gameobject.js"></script>
         <script src="js/tankSprite.js"></script>
         <script src="js/tank.js"></script>
-        <script src="js/tankCanvas.js"></script>
         <script src="js/shell.js"></script>
         <script src="js/shellCanvas.js"></script>
         <script src="js/background.js"></script>
@@ -24,7 +23,6 @@
             $(document).ready(function() {
                 var canvas = document.getElementById('gamearea');
                 var context = canvas.getContext('2d');
-                Tank.drawer = TankCanvas;
                 Shell.drawer = ShellCanvas;
                 GameManager.init(canvas, context);
                 Background.init();
