@@ -20,17 +20,25 @@
 </head>
 <body>
 	<div id="controls_content">
+		<div id="cont_head">
+			<img src="./imgs/controller_title.png" />
+		</div>
 		<div id="name">
-			Enter your name: <input type="text" id="username" /><input type="submit" value="GO!" id="submitbutton">
+			<label for="username">Enter your name:</label>
+			<br />
+			<input type="text" id="username" />
+			<br />
+			<input type="submit" value="GO!" id="submitbutton">
 		</div>
 		<div id="controller">
 			<div data-type="move" data-action="up" id="move_up"></div>
 			<div data-type="move" data-action="left" id="move_left"></div>
 			<div data-type="move" data-action="right" id="move_right"></div>
 			<div data-type="move" data-action="down" id="move_down"></div>
+			<div data-type="respawn" data-action='respawn' id="respawn"></div>
 			<div data-type="shoot" data-action="mine" id="shoot_mine"></div>
 			<div data-type="shoot" data-action="bullet" id="shoot_bullet"></div>
-			<div data-type="respawn" data-action='' id="respawn"></div>
+			
 		</div>
 	</div>
 </body>

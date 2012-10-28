@@ -82,7 +82,16 @@ ul li {
 /*******************
  *** CONTROLLER ***
 /*******************/ 
-
+#cont_head {
+    text-align: center;
+}
+#username, #submitbutton {
+    font-size: 2em;
+}
+#name {
+    padding: 10px;
+    font-size: 2em;
+}
 #controls_content {
     overflow-x:hidden;overflow-y:hidden;
 }
@@ -95,12 +104,12 @@ ul li {
 }
 #move_up, #move_down, #move_left, #move_right, #shoot_bullet, #shoot_mine, #respawn {
     position: relative;
-     border: 1px solid transparent; 
+    border: 1px solid transparent; 
     width: 30px;
     height: 30px;
     user-select: none;
     -webkit-user-select: none;
-    -moz-user-select: none;
+    -moz-user-select: none;*/
 }
 #move_up {
     top: 80px;
@@ -121,25 +130,16 @@ ul li {
 }
 #shoot_bullet {
     width: 50px; height: 50px;
-    top: -65px;
+    top: -115px;
     left: 375px;
 }
 #shoot_mine {
     width: 50px; height: 50px;
-    top: -10px;
+    top: -60px;
     left: 310px;
 }
 #respawn {
-    height: 45px;
-    width: 65px;
-    top: -109px;
-    left: 224px;
-}
-
-#status, #name {
-}
-
-#move_controls, #shoot_controls {
-    width: 220px;
-    text-align: center;
+    width: 50px; height: 50px;
+    top: -10px;
+    left: 230px;
 }

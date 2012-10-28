@@ -6,12 +6,12 @@ $(function(){
     // Get the username
     $('#submitbutton').click(function(e){
 
-        // Check there's a username
+/*        // Check there's a username
         if ($('#username').val() == '') {
             alert('Please enter a username.');
             e.preventDefault();
             return false;
-        }
+        }*/
 
         var controller_id = $('#username').val(); //Math.random()+'';
         var mouseIsDown = false;
@@ -126,13 +126,13 @@ $(function(){
 
             // respawn
             $('div[data-type=respawn]').mousedown(function(){
-                _emitControlEvent(socket, this, 'start');
-                mouseIsDown = true;
+                // _emitControlEvent(socket, this, 'start');
+                 mouseIsDown = true;
                 $(this).css({ opacity: 0.5, background: "#333" });
             }).bind('mouseup mouseleave', function() {
                 if (mouseIsDown) {
-                    _emitControlEvent(socket, this, 'stop');
-                    mouseIsDown = false;
+                    // _emitControlEvent(socket, this, 'stop');
+                     mouseIsDown = false;
                     $(this).css('background','transparent');
                 }
             });
@@ -142,7 +142,8 @@ $(function(){
             });    
 
             $('#controller').show();  
-            $('#name').hide();  
+            $('#name').hide(); 
+            $('#cont_head').hide(); 
 
            
         });
