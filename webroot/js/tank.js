@@ -3,6 +3,7 @@ var Tank = Object.create(GameObject);
 Tank.speed = 10;
 
 Tank.sprite = null;
+Tank.hp = 10;
 Tank.draw = function(delta) {
     if (this.sprite == null) {
         this.sprite = Object.create(TankSprite);

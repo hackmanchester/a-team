@@ -83,10 +83,56 @@ io.sockets.on('connection', function (socket) {
         });
     }
 
-    var _hitscanFrom = function(tank) {
-        // Hitscan to other tanks
+    var _collide = function(a, b) {
+        // Check if a can fire on b
+        if (a.id == b.id) {
+            return false;
+        }
 
+        if ((Math.abs(a.y - b.y) > 20) && (Math.abs(a.x - b.x) > 20)) {
+            return false;
+        }
+        
+        // Final check of orientation
+        if (a.orientation.x == 1 && a.x > b.x) {
+            return false;
+        }
+
+        if (a.orientation.y == 1 && a.y > b.y) {
+            return false;
+        }
+
+        // Return distance
+        return Math.max(Math.abs(a.x - b.x), Math.abs(a.y - b.y));
+        
+    }
+
+    var _hitscanFrom = function(tank) {
+        // Fire the shell
         _createShell(tank);
+
+        // Hitscan to other tanks
+        var closest = {id:null, distance:false};
+        for (var i in objects) {
+            var distance = _collide(tank, objects[i]);
+            if (distance && (!closest.distance || closest.distance > distance)) {
+                closest = {id: objects[i].id, distance:distance};
+            }
+        }
+
+        // Hit !
+        if (closest.id) {
+            console.log('Hit '+closest.id+' at a distance of '+closest.distance);
+            objects[closest.id].hp -= 1;
+
+            if (objects[closest.id].hp <= 0) {
+                // Boom;
+            }
+
+            // Sync changes to all clients
+            socket.broadcast.emit('updateTank', {object:objects[closest.id]});
+        }
+
     }
 
     var _getCannonHardpoint = function(tank) {
@@ -130,6 +176,7 @@ io.sockets.on('connection', function (socket) {
         shell.y = chp.y;
         shell.vector = tank.orientation;
         //objects[shell.id] = shell;
+        // Add range
         socket.broadcast.emit('createShell', {object:shell});
     }
 
