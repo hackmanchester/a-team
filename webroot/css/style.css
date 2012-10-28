@@ -98,7 +98,7 @@ input[type=text], input[type=password] {
 }
 
 #message {
-    display:none;
+    display:hidden;
     color: #000;
 }
 
@@ -106,13 +106,13 @@ input[type=text], input[type=password] {
     color: red;
 }
 
-
 #content {
     width: 600px;
     height: 320px;
     margin: auto;
 
 }
+
 #controller {
     width: 480px;
     height: 208px;
@@ -120,6 +120,7 @@ input[type=text], input[type=password] {
     background-repeat: no-repeat;
     display: none;
 }
+
 #move_up, #move_down, #move_left, #move_right, #shoot_bullet, #shoot_mine {
     position: relative;
      border: 1px solid transparent; 
