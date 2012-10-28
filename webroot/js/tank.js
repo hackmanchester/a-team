@@ -5,6 +5,10 @@ Tank.speed = 10;
 Tank.sprite = null;
 Tank.hp = 10;
 Tank.draw = function(delta) {
+    if (this.disabled) {
+    	return false;
+    }
+
     if (this.hp == 0) {
         var explosion = Object.create(Explosion);
         explosion.x = this.x + 20;

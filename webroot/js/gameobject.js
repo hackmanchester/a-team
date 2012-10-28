@@ -15,6 +15,7 @@ var GameObject = {
         x: 0,
         y: -1
     },
+    disabled: false,
     
     drawer: null,
     

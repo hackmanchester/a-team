@@ -90,6 +90,17 @@
                     socket.on('updateTank', function(data) {
                         GameManager.objects[data.object.id].hp = data.object.hp;
                     });
+
+                    socket.on('respawnTank', function(data) {
+                        $('#message').html(data.object.owner +' has respawned!').fadeIn(400).delay(2000).fadeOut(400);
+                        var tank = Object.create(Tank);
+                        _.extend(tank, data.object);
+                        GameManager.addObject(tank);
+                    });
+
+                    socket.on('tripMine', function(data) {
+                        delete(GameManager.objects[data.object.id]);
+                    });
                 });
 
                 // Open the controllers
