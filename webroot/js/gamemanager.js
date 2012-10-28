@@ -37,6 +37,8 @@ var GameManager = {
 
     moveTank: function(tank) {
         this.objects[tank.id].vector = tank.vector;
+        this.objects[tank.id].x = tank.x;
+        this.objects[tank.id].y = tank.y;
     }
     
 }
