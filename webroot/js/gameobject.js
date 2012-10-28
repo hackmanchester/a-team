@@ -7,6 +7,7 @@ var GameObject = {
     y: 0,
     speed: 0,
     facing: 'up',
+    type: 'GameObject',
     vector: {
         x: 0, 
         y: 0
@@ -44,6 +45,6 @@ var GameObject = {
         }
     },
     getId: function() {
-        this.id = Math.random()+'';
+        this.id = this.type + '-' + Math.random();
     }
 }

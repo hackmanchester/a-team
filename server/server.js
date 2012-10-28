@@ -14,6 +14,7 @@ includeInThisContext('../webroot/js/gameobject.js');
 includeInThisContext('../webroot/js/tank.js');
 includeInThisContext('../webroot/js/shell.js');
 includeInThisContext('../webroot/js/mine.js');
+includeInThisContext('../webroot/js/obstacle.js');
 
 
 var _vectorConvert = function(direction) {
@@ -32,6 +33,17 @@ var _vectorConvert = function(direction) {
 var controllers = {};
 var ownerTanks = {};
 var objects = {};
+
+//Create obstacles for this instance
+for (var i = 0; i < 8; i ++) {
+    var obstacle = Object.create(Obstacle);
+    obstacle.kind = Math.round(Math.random());
+    obstacle.x = Math.round(Math.random() * 600 / 40) * 40;
+    obstacle.y = Math.round(Math.random() * 500 / 40) * 40;
+    obstacle.getId();
+    objects[obstacle.id] = obstacle;
+}
+
 io.sockets.on('connection', function (socket) {
     // Send everyone's position to bootstrap client
     socket.on('load', function() {
@@ -51,7 +63,7 @@ io.sockets.on('connection', function (socket) {
         ownerTanks[data.controller_id] = tank.id;
         tank.x = 10;
         tank.y = 10;
-
+        tank.name = 'Tank';
         objects[tank.id] = tank;
 
         // Send update event to everyone
@@ -161,7 +173,7 @@ io.sockets.on('connection', function (socket) {
         }
 
         // Fire the shell
-        _createShell(tank, closest.distance);
+        _createShell(tank, closest.distance-10);
 
         // Hit !
         if (closest.id) {
