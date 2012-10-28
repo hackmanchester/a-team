@@ -145,12 +145,13 @@ io.sockets.on('connection', function (socket) {
             console.log('Hit '+closest.id+' at a distance of '+closest.distance);
             objects[closest.id].hp -= 1;
 
-            if (objects[closest.id].hp <= 0) {
-                // Boom;
-            }
-
             // Sync changes to all clients
             socket.broadcast.emit('updateTank', {object:objects[closest.id]});
+
+            // Delete from server side
+            if (objects[closest.id].hp <= 0) {
+                delete(objects[closest.id]);
+            }
         }
 
     }
