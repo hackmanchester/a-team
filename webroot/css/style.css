@@ -112,7 +112,9 @@ input[type=text], input[type=password] {
     margin: auto;
 
 }
-
+#controls_content {
+    overflow-x:hidden;overflow-y:hidden;
+}
 #controller {
     width: 480px;
     height: 208px;

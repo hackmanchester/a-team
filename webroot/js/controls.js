@@ -40,6 +40,40 @@ $(function(){
                 }
             });
 
+            $(document).keypress(function(e){
+                var keycode = (e.keyCode ? e.keyCode : e.which);
+                switch (keycode) {
+                    case 97: //a
+                        _emitControlEvent(socket, {}, 'start', {type: 'move', action: 'left'})
+                        break;
+                    case 119: //w
+                        _emitControlEvent(socket, {}, 'start', {type: 'move', action: 'up'})
+                        break;
+                    case 100: //d
+                        _emitControlEvent(socket, {}, 'start', {type: 'move', action: 'right'})
+                        break;
+                    case 115: //s
+                        _emitControlEvent(socket, {}, 'start', {type: 'move', action: 'down'})
+                        break;
+                }
+            }).bind('keyup', function(e){
+                var keycode = (e.keyCode ? e.keyCode : e.which);
+                switch (keycode) {
+                    case 65: //a
+                        _emitControlEvent(socket, {}, 'stop', {type: 'move', action: 'left'})
+                        break;
+                    case 87: //w
+                        _emitControlEvent(socket, {}, 'stop', {type: 'move', action: 'up'})
+                        break;
+                    case 68: //d
+                        _emitControlEvent(socket, {}, 'stop', {type: 'move', action: 'right'})
+                        break;
+                    case 83: //s
+                        _emitControlEvent(socket, {}, 'stop', {type: 'move', action: 'down'})
+                        break;
+                }
+            });            
+            
             // Shoot events
             $('div[data-type=shoot]').mousedown(function(){
                 _emitControlEvent(socket, this, 'start');
