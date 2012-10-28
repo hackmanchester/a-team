@@ -4,8 +4,8 @@
 var TankSprite = {  
     imageSrc: 'imgs/tank.png',
     image: null,
-    width: 40,
-    height: 40,
+    width: 41,
+    height: 41,
     
     states: {
         up: [[0, 0], [1, 0]],
@@ -13,12 +13,7 @@ var TankSprite = {
         down: [[0, 2], [1, 2]],
         right: [[0, 3], [1, 3]]
     },
-    directions: {
-        up: 1,
-        left: 2,
-        down: 3,
-        right: 4
-    },
+    
     
     time:0,
     
@@ -44,14 +39,16 @@ var TankSprite = {
         }
         var state = this.states[tank.facing][this.currentFrame];
 
-        sourceX = state[0] * this.width + this.currentFrame;
-        sourceY = state[1] * this.height + this.directions[tank.facing];
+        sourceX = state[0] * this.width;
+        sourceY = state[1] * this.height;
 
         GameManager.context.drawImage(
             this.image, sourceX, sourceY,
             this.width, this.height,
             tank.x, tank.y,
             this.width, this.height);
+            
+        
     }
 
 }

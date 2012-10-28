@@ -1,6 +1,7 @@
 var Tank = Object.create(GameObject);
 
 Tank.speed = 10;
+Tank.username = "Wayne";
 Tank.sprite = null;
 Tank.draw = function(delta) {
     if (this.sprite == null) {
