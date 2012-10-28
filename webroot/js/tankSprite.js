@@ -58,7 +58,13 @@ var TankSprite = {
         context.fillStyle = '#FFFFFF';
         context.textAlign = "center";
         context.font = "bold 12px sans-serif";
-        context.fillText(tank.owner, tank.x + this.width / 2, tank.y+this.height+10);
+        var kills = 0;
+        if (GameManager.score[tank.owner].kills) {
+            kills = GameManager.score[tank.owner].kills;
+        }
+        context.fillText(
+            tank.owner + ' (' + kills + ')', tank.x + this.width / 2, tank.y+this.height+10
+        );
 
     }
 

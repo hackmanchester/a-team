@@ -63,7 +63,6 @@ io.sockets.on('connection', function (socket) {
         ownerTanks[data.controller_id] = tank.id;
         tank.x = 10;
         tank.y = 10;
-        tank.name = 'Tank';
         objects[tank.id] = tank;
 
         // Send update event to everyone
@@ -82,10 +81,13 @@ io.sockets.on('connection', function (socket) {
         // Test for terrain
         for (var i in objects) {
             if (objects[i].disabled) continue;
-            if (objects[i].type == 'Obstacle') {
-                if ((Math.abs(objects[i].x - predicted.x) < 40) && (Math.abs(objects[i].y - predicted.y) < 40)) {
-                    return true;
-                }
+            switch (objects[i].type) {
+                case 'Obstacle':
+                //case 'Tank':
+                    if ((Math.abs(objects[i].x - predicted.x) < 40) && (Math.abs(objects[i].y - predicted.y) < 40)) {
+                        return true;
+                    }
+                    break;
             }
         }
         return false;
@@ -108,6 +110,7 @@ io.sockets.on('connection', function (socket) {
     var _tripMine = function(tank, mine) {
         // Unlucky.
         objects[tank.id].hp = 0;
+        socket.broadcast.emit('score', {killed:tank.owner, by:mine.owner});
         // Sync changes to all clients
         socket.broadcast.emit('updateTank', {object:objects[tank.id]});
         socket.broadcast.emit('tripMine', {object:objects[mine.id]});
@@ -219,6 +222,7 @@ io.sockets.on('connection', function (socket) {
             // Delete from server side
             if (objects[closest.id].hp <= 0) {
                 objects[closest.id].disabled = true;
+                socket.broadcast.emit('score', {killed:objects[closest.id].owner, by:tank.owner});
             }
         }
 
