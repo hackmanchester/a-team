@@ -98,7 +98,7 @@ io.sockets.on('connection', function (socket) {
         for (var i in objects) {
             if (objects[i].disabled) continue;
             switch(objects[i].type) {
-                case 'mine':
+                case 'Mine':
                     if ((Math.abs(objects[i].x - tank.x) < 20) && (Math.abs(objects[i].y - tank.y) < 20)) {
                         return _tripMine(tank, objects[i]);
                     }

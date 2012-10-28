@@ -1,6 +1,6 @@
 var Mine = Object.create(GameObject);
 
-Mine.type = 'mine';
+Mine.type = 'Mine';
 Mine.draw = function(delta) {
 	if (this.disabled) {
 		return false;
