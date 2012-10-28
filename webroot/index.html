@@ -4,6 +4,7 @@
         <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/game.css" />
+        <link rel="stylesheet" href="css/style.css" />
         <script src="js/jquery.min.js"></script>
         <script src='js/socket.io.js'></script>
         <script src="js/underscore.js"></script>
@@ -19,65 +20,73 @@
         <script src="js/background.js"></script>
     </head>
     <body>
-        
-        <div id="flashmessage"></div>
-        <br />
-        <canvas id="gamearea" width="500" height="500"></canvas>
-        <canvas id="background" width="500" height="500"></canvas>
-        <script>
-            $(document).ready(function() {
-                var canvas = document.getElementById('gamearea');
-                var context = canvas.getContext('2d');
-                Shell.drawer = ShellCanvas;
-                Shell.drawer = ShellCanvas;
-                Mine.drawer = MineCanvas;
-                GameManager.init(canvas, context);
-                Background.init();
-                var socket = io.connect(
-                    'http://'+window.location.hostname+':9000/'
-                );
+        <div id="wrapper">
+            <div id="content">
+                <div id="header">
+                    <h1>Tank Battle</h1> 
+                    <div id="message">&nbsp;</div>
+                </div>
+                
+                <br />
+                <canvas id="gamearea" width="600" height="500"></canvas>
+                <canvas id="background" width="500" height="500"></canvas>
+            </div>
+        </div>
+            <script>
+                $(document).ready(function() {
+                    var canvas = document.getElementById('gamearea');
+                    var context = canvas.getContext('2d');
+                    Tank.drawer = TankCanvas;
+                    Shell.drawer = ShellCanvas;
+                    Mine.drawer = MineCanvas;
+                    Background.init();
+                    GameManager.init(canvas, context);
 
-                socket.on('connect', function () {});
-                socket.emit('load');
-                socket.on('load', function(data) {
-                    // Receive bunch of data and populate map with tanks
-                    for (var i in data.objects) {
+                    var socket = io.connect(
+                        'http://'+window.location.hostname+':9000/'
+                    );
+
+                    socket.on('connect', function () {});
+                    socket.emit('load');
+                    socket.on('load', function(data) {
+                        // Receive bunch of data and populate map with tanks
+                        for (var i in data.objects) {
+                            console.log(i);
+                            var tank = Object.create(Tank);
+                            _.extend(tank, data.objects[i]);
+                            GameManager.addObject(tank);
+                        };
+            
+                        gameloop();
+                    });
+
+                    socket.on('createTank', function(data){
+                        $('#message').html(data.object.owner +' has joined the game!').fadeIn(400).delay(2000).fadeOut(400);
                         var tank = Object.create(Tank);
-                        _.extend(tank, data.objects[i]);
+                        _.extend(tank, data.object);
                         GameManager.addObject(tank);
-                    };
-        
-                    gameloop();
-                });
+                    });
 
-                socket.on('createTank', function(data){
-                    console.log('data');
-                    var tank = Object.create(Tank);
-                    _.extend(tank, data.object);
-                    GameManager.addObject(tank);
-                });
+                    socket.on('createShell', function(data){
+                        var shell = Object.create(Shell);
+                        _.extend(shell, data.object);
+                        GameManager.addObject(shell);
+                    });
 
-                socket.on('createShell', function(data){
-                    var shell = Object.create(Shell);
-                    _.extend(shell, data.object);
-                    GameManager.addObject(shell);
-                });
+                    socket.on('moveTank', function(data) {
+                        GameManager.moveTank(data.object);
+                    });
 
-                socket.on('createMine', function(data){
-                    var mine = Object.create(Mine);
-                    _.extend(mine, data.object);
-                    GameManager.addObject(mine);
-                });
+                    socket.on('createMine', function(data){
+                        var mine = Object.create(Mine);
+                        _.extend(mine, data.object);
+                        GameManager.addObject(mine);
+                    });
 
-                socket.on('moveTank', function(data) {
-                    GameManager.moveTank(data.object);
+                    socket.on('updateTank', function(data) {
+                        GameManager.objects[data.object.id].hp = data.object.hp;
+                    });
                 });
-
-
-                socket.on('updateTank', function(data) {
-                    GameManager.objects[data.object.id].hp = data.object.hp;
-                });
-            });
-        </script>
+           </script>
     </body>
 </html>
