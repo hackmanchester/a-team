@@ -1,5 +1,7 @@
 // Client
 $(function(){
+    sfx_bullet = new Audio("/sounds/laser.mp3");
+    sfx_mine = new Audio("/sounds/boom.mp3");
 
     // Get the username
     $('#submitbutton').click(function(e){
@@ -13,6 +15,7 @@ $(function(){
 
         var controller_id = $('#username').val(); //Math.random()+'';
         var mouseIsDown = false;
+        var mouseIsUp = true;
         var socket = io.connect(
             'http://'+window.location.hostname+':9000/'
         );
@@ -22,6 +25,7 @@ $(function(){
             var _emitControlEvent = function(socket, div, state, data) {
                 var type = $(div).data('type') ? $(div).data('type') : data.type;
                 var action = $(div).data('action') ? $(div).data('action') : data.action;
+
                 socket.emit('control', {
                     type: type,
                     action: action,
@@ -29,34 +33,33 @@ $(function(){
                 });
 
                 if (type == 'shoot' && state == 'start') {
-                    var bullet = new Audio("/sounds/laser.mp3");
-                    var mine = new Audio("/sounds/boom.mp3");
-                    switch(action) {
-                        case 'bullet':
-                            bullet.play();
-                        break;
-                        case 'mine':
-                            mine.play();
-                        break;
+                   
+                    if (action == 'bullet') {
+                            sfx_bullet.play();
+                            sfx_bullet.currentTime = 0;
+                    }
 
-                        delete(mine);
-                        delete(bullet);
-
-                        
-                        
+                    if (action == 'mine') {
+                            sfx_mine.play();
+                            sfx_mine.currentTime = 0;
                     }
                 }
             }
 
             // Move events
             $('div[data-type=move]').mousedown(function(){
-                _emitControlEvent(socket, this, 'start');
-                mouseIsDown = true;
-                $(this).css({ opacity: 0.5, background: "#333" });
+                if (mouseIsUp) {
+                    mouseIsUp = false;
+                    mouseIsDown = true;
+                    _emitControlEvent(socket, this, 'start');
+                    $(this).css({ opacity: 0.5, background: "#333" });
+                }
+                
             }).bind('mouseup mouseleave', function() {
                 if (mouseIsDown) {
                     _emitControlEvent(socket, this, 'stop');
-                    mouseIsDown = false
+                    mouseIsDown = false;
+                    mouseIsUp = true;
                     $(this).css('background','transparent');
                 }
             });
