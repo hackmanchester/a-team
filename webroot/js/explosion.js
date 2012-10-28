@@ -3,11 +3,13 @@ var Explosion = {
     y: 0,
     particles: {},
     start: function() {
+        var audio = new Audio("/sounds/explosion.mp3");
+        audio.play();
         var count = 2000;
         var angle = (Math.PI * 2) / count;
         for (var i = 0; i <= count; i++) {           
             GameManager.addParticle(this.createParticle(i, angle));
-            console.log(this.createParticle(i, angle));
+            /*console.log(this.createParticle(i, angle));*/
         }
     }, 
     createParticle : function(count, angle) {

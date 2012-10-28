@@ -20,11 +20,32 @@ $(function(){
         socket.on('connect', function () {
             
             var _emitControlEvent = function(socket, div, state, data) {
+                var type = $(div).data('type') ? $(div).data('type') : data.type;
+                var action = $(div).data('action') ? $(div).data('action') : data.action;
                 socket.emit('control', {
-                    type: $(div).data('type') ? $(div).data('type') : data.type,
-                    action: $(div).data('action') ? $(div).data('action') : data.action,
+                    type: type,
+                    action: action,
                     state: state
                 });
+
+                if (type == 'shoot' && state == 'start') {
+                    var bullet = new Audio("/sounds/laser.mp3");
+                    var mine = new Audio("/sounds/boom.mp3");
+                    switch(action) {
+                        case 'bullet':
+                            bullet.play();
+                        break;
+                        case 'mine':
+                            mine.play();
+                        break;
+
+                        delete(mine);
+                        delete(bullet);
+
+                        
+                        
+                    }
+                }
             }
 
             // Move events
@@ -55,6 +76,13 @@ $(function(){
                     case 115: //s
                         _emitControlEvent(socket, {}, 'start', {type: 'move', action: 'down'})
                         break;
+                    case 110://n
+                        _emitControlEvent(socket, {}, 'start', {type: 'shoot', action: 'bullet'})
+                        break;
+                    case 109: //m
+                        _emitControlEvent(socket, {}, 'start', {type: 'shoot', action: 'mine'})
+                        break;
+
                 }
             }).bind('keyup', function(e){
                 var keycode = (e.keyCode ? e.keyCode : e.which);
@@ -71,6 +99,12 @@ $(function(){
                     case 83: //s
                         _emitControlEvent(socket, {}, 'stop', {type: 'move', action: 'down'})
                         break;
+                    case 78://n
+                        _emitControlEvent(socket, {}, 'start', {type: 'shoot', action: 'bullet'})
+                        break;
+                    case 77: //m
+                        _emitControlEvent(socket, {}, 'start', {type: 'shoot', action: 'mine'})
+                        break;                        
                 }
             });            
             
