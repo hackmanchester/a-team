@@ -54,8 +54,8 @@ ul li {
 #header {
     text-align: center;
     margin: auto;
-    width: 700px;
     margin-bottom: 20px;
+    width: 720px;
 }
 
 #wrapper {
@@ -81,6 +81,7 @@ ul li {
     color: #fff;
     font-weight: bold;
     height: 20px;
+    margin: auto;
 }
 
 
@@ -147,4 +148,30 @@ ul li {
     width: 50px; height: 50px;
     top: -10px;
     left: 230px;
+}
+
+#qrCode {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 180px;
+}
+
+/** CLEAR FIX **/
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+    *zoom: 1;
 }
