@@ -3,7 +3,6 @@
     position:relative;
     left:0px;
     top:-505px;
-    border: 1px solid #000;
 }
 
 #gamearea {
@@ -11,5 +10,10 @@
     position:relative;
     left:0px;
     top:0px;
-    border: 1px solid orange;
+}
+
+#controllerOpen {
+ position:relative;
+    left:0px;
+    top:-500px;   
 }

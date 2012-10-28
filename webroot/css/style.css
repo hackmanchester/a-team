@@ -7,7 +7,7 @@ version: 2.8.2r1
 Reset
 */
 
-html{color:#fff;background:#000;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var,optgroup{font-style:inherit;font-weight:inherit;}del,ins{text-decoration:none;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:baseline;}sub{vertical-align:baseline;}legend{color:#000;}input,button,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;}input,button,textarea,select{*font-size:100%;}
+html{color:#ffffff;background:#000;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var,optgroup{font-style:inherit;font-weight:inherit;}del,ins{text-decoration:none;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:baseline;}sub{vertical-align:baseline;}legend{color:#000;}input,button,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;}input,button,textarea,select{*font-size:100%;}
 
 html, body {
     background-color: #000;
@@ -16,7 +16,7 @@ html, body {
 body {
     font-size:        14px;
     font-family:      Helvetica, Verdana, Arial, Helvetica, sans-serif;
-    color:            #313131;
+    color:            #ffffff;
 }
 
 a {
@@ -83,8 +83,8 @@ ul li {
     background-repeat: no-repeat;
     margin: auto;
     text-align: center;
-    width: 1024px;
-    height: 800px;
+    width: 950px;
+    height: 742px;
 }
 
 
@@ -99,6 +99,7 @@ input[type=text], input[type=password] {
 
 #message {
     display:none;
+    color: #000;
 }
 
 .error {
@@ -156,8 +157,6 @@ input[type=text], input[type=password] {
     left: 310px;
 }
 #status, #name {
-    margin: auto;
-    text-align: center;
 }
 
 #move_controls, #shoot_controls {

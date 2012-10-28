@@ -30,6 +30,7 @@
                 <br />
                 <canvas id="gamearea" width="600" height="500"></canvas>
                 <canvas id="background" width="600" height="500"></canvas>
+                <a href="" id="controllerOpen">Open The Controller</a>
             </div>
         </div>
             <script>
@@ -86,6 +87,21 @@
                     socket.on('updateTank', function(data) {
                         GameManager.objects[data.object.id].hp = data.object.hp;
                     });
+                });
+
+                // Open the controllers
+                $('#controllerOpen').click( function(event) {
+                    var myObject = $(this);
+                    var href = myObject.attr("/controls.html");
+                    var name = myObject.attr("controller_window");
+                    var popup = window.open("/controls.html", name, "width=480,height=210,top=20,left=60,scrollbars=no,menubar=no,status=no,titlebar=no");
+                    
+                    if ( window.focus ) {
+                            popup.focus();
+                    }
+
+                    event.preventDefault();
+
                 });
            </script>
     </body>

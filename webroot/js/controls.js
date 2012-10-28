@@ -58,7 +58,9 @@ $(function(){
             });    
 
             $('#controller').show();  
-            $('#name').hide();          
+            $('#name').hide();  
+
+           
         });
 
     });
