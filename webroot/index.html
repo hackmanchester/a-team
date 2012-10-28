@@ -74,7 +74,7 @@
                     });
 
                     socket.on('createTank', function(data){
-                        $('#message').html(data.object.owner +' has joined the game!').fadeIn(400).delay(2000).html('');
+                        $('#message').html(data.object.owner +' has joined the game!').fadeIn(400).delay(2000).html('&nbsp;');
                         var tank = Object.create(Tank);
                         _.extend(tank, data.object);
                         GameManager.addObject(tank);
@@ -101,7 +101,7 @@
                     });
 
                     socket.on('respawnTank', function(data) {
-                        $('#message').html(data.object.owner +' has respawned!').fadeIn(400).delay(2000).fadeOut(400);
+                        $('#message').html(data.object.owner +' has respawned!');
                         var tank = Object.create(Tank);
                         _.extend(tank, data.object);
                         GameManager.addObject(tank);

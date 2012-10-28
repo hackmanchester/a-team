@@ -74,8 +74,9 @@ ul li {
     float: right;
 }
 #message {
-    display:hidden;
-    color: #000;
+    color: #fff;
+    font-weight: bold;
+    height: 20px;
 }
 
 

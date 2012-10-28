@@ -321,6 +321,7 @@ io.sockets.on('connection', function (socket) {
         tank.hp = Tank.hp;
         tank.x = 10;
         tank.y = 10;
+        tank.disabled = false;
         objects[tank.id] = tank;
         socket.broadcast.emit('respawnTank', {object:tank});
     }
