@@ -13,6 +13,8 @@ var includeInThisContext = function(path) {
 includeInThisContext('../webroot/js/gameobject.js');
 includeInThisContext('../webroot/js/tank.js');
 includeInThisContext('../webroot/js/shell.js');
+includeInThisContext('../webroot/js/mine.js');
+
 
 var _vectorConvert = function(direction) {
     switch(direction) {
@@ -167,6 +169,38 @@ io.sockets.on('connection', function (socket) {
         };
     }
 
+    var _getMineHardpoint = function(tank) {
+        var o = tank.orientation;
+        var point = {x:0, y:0};
+        switch (true) {
+            // right
+            case (o.x == 1):
+                point.x +=10;
+                point.y +=18;
+                break;
+            // down
+            case (o.y == 1):
+                point.x += 18;
+                point.y += 10;
+                break;
+            // left
+            case (o.x == -1):
+                point.x +=35;
+                point.y +=18;
+                break;
+            // up
+            case (o.y == -1):
+                point.x += 18;
+                point.y += 35;
+                break;
+        }
+
+        return {
+            x: tank.x + point.x,
+            y: tank.y + point.y,
+        };
+    }
+
     var _createShell = function(tank) {
         var shell = Object.create(Shell);
         shell.getId();
@@ -178,6 +212,17 @@ io.sockets.on('connection', function (socket) {
         //objects[shell.id] = shell;
         // Add range
         socket.broadcast.emit('createShell', {object:shell});
+    }
+
+    var _placeMine = function(tank) {
+        var mine = Object.create(Mine);
+        mine.getId();
+        mine.owner = tank.owner;
+        var mhp = _getMineHardpoint(tank);
+        mine.x = mhp.x;
+        mine.y = mhp.y;
+        //objects[mine.id] = mine;
+        socket.broadcast.emit('createMine', {object:mine});
     }
 
     // Listen for controller
@@ -197,7 +242,7 @@ io.sockets.on('connection', function (socket) {
                     case 'bullet':
                         return _hitscanFrom(tank);
                     case 'mine':
-                        return;
+                        return _placeMine(tank);
                 }
         }
     });

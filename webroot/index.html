@@ -14,6 +14,8 @@
         <script src="js/tank.js"></script>
         <script src="js/shell.js"></script>
         <script src="js/shellCanvas.js"></script>
+        <script src="js/mine.js"></script>
+        <script src="js/mineCanvas.js"></script>
         <script src="js/background.js"></script>
     </head>
     <body>
@@ -24,6 +26,7 @@
                 var canvas = document.getElementById('gamearea');
                 var context = canvas.getContext('2d');
                 Shell.drawer = ShellCanvas;
+                Mine.drawer = MineCanvas;
                 GameManager.init(canvas, context);
                 Background.init();
                 var socket = io.connect(
@@ -55,12 +58,18 @@
                     GameManager.addObject(shell);
                 });
 
+                socket.on('createMine', function(data){
+                    var mine = Object.create(Mine);
+                    _.extend(mine, data.object);
+                    GameManager.addObject(mine);
+                });
+
                 socket.on('moveTank', function(data) {
                     GameManager.moveTank(data.object);
                 });
 
                 socket.on('updateTank', function(data) {
-                    console.log(data.object.hp);
+                    GameManager.objects[data.object.id].hp = data.object.hp;
                 });
             });
         </script>
