@@ -111,9 +111,6 @@ io.sockets.on('connection', function (socket) {
     }
 
     var _hitscanFrom = function(tank) {
-        // Fire the shell
-        _createShell(tank);
-
         // Hitscan to other tanks
         var closest = {id:null, distance:false};
         for (var i in objects) {
@@ -122,6 +119,9 @@ io.sockets.on('connection', function (socket) {
                 closest = {id: objects[i].id, distance:distance};
             }
         }
+
+        // Fire the shell
+        _createShell(tank, closest.distance);
 
         // Hit !
         if (closest.id) {
@@ -202,7 +202,7 @@ io.sockets.on('connection', function (socket) {
         };
     }
 
-    var _createShell = function(tank) {
+    var _createShell = function(tank, range) {
         var shell = Object.create(Shell);
         shell.getId();
         shell.owner = tank.owner;
@@ -210,8 +210,9 @@ io.sockets.on('connection', function (socket) {
         shell.x = chp.x;
         shell.y = chp.y;
         shell.vector = tank.orientation;
-        //objects[shell.id] = shell;
-        // Add range
+        if (range) {
+            shell.range = range;
+        }
         socket.broadcast.emit('createShell', {object:shell});
     }
 
