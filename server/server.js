@@ -116,6 +116,10 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.emit('tripMine', {object:objects[mine.id]});
         objects[tank.id].disabled = true;
         objects[mine.id].disabled = true;
+
+        setTimeout(function(){
+            _respawn(tank);
+        }, 1000);
     }
 
     var time = null;
@@ -223,6 +227,9 @@ io.sockets.on('connection', function (socket) {
             if (objects[closest.id].hp <= 0) {
                 objects[closest.id].disabled = true;
                 socket.broadcast.emit('score', {killed:objects[closest.id].owner, by:tank.owner});
+                setTimeout(function() {
+                    _respawn(objects[closest.id]);
+                }, 1000);
             }
         }
 
@@ -319,11 +326,19 @@ io.sockets.on('connection', function (socket) {
 
     var _respawn = function(tank) {
         tank.hp = Tank.hp;
-        tank.x = 10;
-        tank.y = 10;
+        var l = _randomLocation();
+        tank.x = l.x;
+        tank.y = l.y;
         tank.disabled = false;
         objects[tank.id] = tank;
         socket.broadcast.emit('respawnTank', {object:tank});
+    }
+
+    var _randomLocation = function() {
+        return {
+            x: Math.floor(Math.random() * 990),
+            y: Math.floor(Math.random() * 550)
+        }
     }
 
     // Listen for controller
