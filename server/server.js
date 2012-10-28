@@ -35,7 +35,7 @@ var ownerTanks = {};
 var objects = {};
 
 //Create obstacles for this instance
-for (var i = 0; i < 8; i ++) {
+for (var i = 0; i < 10; i ++) {
     var obstacle = Object.create(Obstacle);
     obstacle.kind = Math.round(Math.random());
     obstacle.x = Math.round(Math.random() * 750 / 40) * 40;
