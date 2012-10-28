@@ -16,6 +16,16 @@
     margin-left: -25px;
 }
 
+#background {
+    z-index: 100;
+    position:absolute;
+    left:0px;
+    top:0px;
+}
+
 #gamearea {
-    
+    z-index: 200;
+    position:absolute;
+    left:0px;
+    top:0px;
 }

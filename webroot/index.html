@@ -15,9 +15,10 @@
         <script src="js/tankCanvas.js"></script>
         <script src="js/shell.js"></script>
         <script src="js/shellCanvas.js"></script>
-        
+        <script src="js/background.js"></script>
     </head>
     <body>
+        <canvas id="background" width="500" height="500"></canvas>
         <canvas id="gamearea" width="500" height="500"></canvas>
         <script>
             $(document).ready(function() {
@@ -26,7 +27,7 @@
                 Tank.drawer = TankCanvas;
                 Shell.drawer = ShellCanvas;
                 GameManager.init(canvas, context);
-
+                Background.init();
                 var socket = io.connect(
                     'http://'+window.location.hostname+':9000/'
                 );

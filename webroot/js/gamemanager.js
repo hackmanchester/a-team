@@ -6,6 +6,9 @@ var GameManager = {
     objects : {},
     canvas: null, 
     context: null,
+    width: 500,
+    height: 500,
+    
     init : function(canvas, context) {
         this.canvas = canvas;
         this.context = context;
@@ -18,8 +21,7 @@ var GameManager = {
      * delta is the time passed since the last frame
      */
     draw: function(delta) {
-        this.context.fillStyle = "#FFFFFF";
-        this.context.fillRect(0, 0, 500, 500);
+        this.context.clearRect(0, 0, this.width, this.height);
         for (i in this.objects) {
             this.objects[i].draw(delta);
         }
