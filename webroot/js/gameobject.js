@@ -6,6 +6,7 @@ var GameObject = {
     x: 0,
     y: 0,
     speed: 0,
+    facing: 'up',
     vector: {
         x: 0, 
         y: 0
@@ -24,6 +25,18 @@ var GameObject = {
     updatePosition: function(delta) {
         this.x += this.vector.x * delta * this.speed * 0.02;
         this.y += this.vector.y * delta * this.speed * 0.02;
+        
+        if (this.vector.x !== 0 || this.vector.y !== 0) {
+            if (this.vector.x == 1) {
+                this.facing = 'right';                
+            } else if (this.vector.x == -1) {
+                this.facing = 'left';
+            } else if (this.vector.y == 1) {
+                this.facing = 'down';
+            } else {
+                this.facing = 'up';
+            }
+        }
     },
     getId: function() {
         this.id = Math.random()+'';
