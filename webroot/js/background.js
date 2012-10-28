@@ -31,6 +31,8 @@ var Background = {
                     x * this.tileWidth, y * this.tileHeight,
                     this.tileWidth, this.tileHeight);
             }
-        } 
+        }
+        
+        Road.init();
     }
 }
