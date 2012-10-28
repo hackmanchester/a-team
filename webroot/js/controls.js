@@ -57,7 +57,6 @@ $(function(){
                 controller_id: controller_id
             });    
 
-            $('#status').html('Game on '+ $('#username').val() +'!');
             $('#controller').show();  
             $('#name').hide();          
         });
