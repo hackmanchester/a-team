@@ -12,6 +12,7 @@ var includeInThisContext = function(path) {
 }.bind(this);
 includeInThisContext('../webroot/js/gameobject.js');
 includeInThisContext('../webroot/js/tank.js');
+includeInThisContext('../webroot/js/shell.js');
 
 var _vectorConvert = function(direction) {
     switch(direction) {
@@ -61,14 +62,8 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.event('tank', data);
     });
 
-    var _getTankByOwner = function(owner) {
-        return objects[ownerTanks[owner]];
-    }
     var time = null;
-    var _controlTankOwnedBy = function(owner, data) {
-        var tank = _getTankByOwner(owner);
-        // set vector for movement
-
+    var _controlTank = function(tank, data) {
         if (data.state == 'stop') {
             // @TODO: Move this code into setTimeout
             // Save tank's x and y after move is done
@@ -80,21 +75,82 @@ io.sockets.on('connection', function (socket) {
         } else {
             time = microtime.now();
             tank.vector = _vectorConvert(data.action);
+            tank.orientation = tank.vector;
         }
-
         socket.broadcast.emit('moveTank', {
             object: tank
         });
+    }
 
-        console.log(
-            owner +"'s tank "+data.state+" "+data.type+" "+ data.action
-        );
+    var _hitscanFrom = function(tank) {
+        // Hitscan to other tanks
+
+        _createShell(tank);
+    }
+
+    var _getCannonHardpoint = function(tank) {
+        var o = tank.orientation;
+        var point = {x:0, y:0};
+        switch (true) {
+            // right
+            case (o.x == 1):
+                point.x +=35;
+                point.y +=18;
+                break;
+            // down
+            case (o.y == 1):
+                point.x += 18;
+                point.y += 35;
+                break;
+            // left
+            case (o.x == -1):
+                point.x +=10;
+                point.y +=18;
+                break;
+            // up
+            case (o.y == -1):
+                point.x += 18;
+                point.y += 10;
+                break;
+        }
+
+        return {
+            x: tank.x + point.x,
+            y: tank.y + point.y,
+        };
+    }
+
+    var _createShell = function(tank) {
+        var shell = Object.create(Shell);
+        shell.getId();
+        shell.owner = tank.owner;
+        var chp = _getCannonHardpoint(tank);
+        shell.x = chp.x;
+        shell.y = chp.y;
+        shell.vector = tank.orientation;
+        //objects[shell.id] = shell;
+        socket.broadcast.emit('createShell', {object:shell});
     }
 
     // Listen for controller
     socket.on('control', function(data) {
-        if (controllers[socket.id]) {
-            _controlTankOwnedBy(controllers[socket.id], data);
+        if (!controllers[socket.id]) {
+            return;
+        }
+        var tank = objects[ownerTanks[controllers[socket.id]]];
+        console.log(
+            tank.owner +"'s tank "+data.state+" "+data.type+" "+ data.action
+        );
+        switch(data.type) {
+            case 'move':
+                return _controlTank(tank, data);
+            case 'shoot':
+                switch (data.action) {
+                    case 'bullet':
+                        return _hitscanFrom(tank);
+                    case 'mine':
+                        return;
+                }
         }
     });
 });
