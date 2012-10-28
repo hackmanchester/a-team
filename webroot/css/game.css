@@ -1,13 +1,15 @@
 #background {
     z-index: 100;
-    position:absolute;
+    position:relative;
     left:0px;
-    top:0px;
+    top:-505px;
+    border: 1px solid #000;
 }
 
 #gamearea {
     z-index: 200;
-    position:absolute;
+    position:relative;
     left:0px;
     top:0px;
+    border: 1px solid orange;
 }
