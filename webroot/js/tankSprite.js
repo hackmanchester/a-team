@@ -51,9 +51,10 @@ var TankSprite = {
             
         context.fillStyle = '#FF0000';
         context.fillRect(tank.x, tank.y-8, this.width, 5);
-        
-        context.fillStyle = '#00FF00';
-        context.fillRect(tank.x, tank.y-7, this.width * tank.hp / Tank.hp, 3);
+        if (tank.hp > 0) {
+            context.fillStyle = '#00FF00';
+            context.fillRect(tank.x, tank.y-7, this.width * tank.hp / Tank.hp, 3);
+        }
     }
 
 }
